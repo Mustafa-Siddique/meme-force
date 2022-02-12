@@ -1,38 +1,158 @@
-.App {
-  text-align: center;
+.App{
+  width: 100%;
+  max-width: 1920px;
+  height: 100vh;
+  margin: 0;
+  background-color: #0C0B0E;
+  padding: 0;
+  color: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
+/* LOADER */
+.load-container{
+  z-index: 100;
+  height: 950vh;
+  width: 100%;
+  background-color: #131417;
+  overflow: hidden;
   pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.spinner-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.leo {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+.green-orbit {
+	width: 120px;
+	height: 120px;
+  border: 1px solid #91ffbfa5;
+  -webkit-animation: spin3D 2s linear 0s infinite;
+}
+.blue-orbit {
+	width: 165px;
+	height: 165px;
+  border: 1px solid #91daffa5;
+  -webkit-animation: spin3D 3s linear .2s infinite;
+}
+.red-orbit {
+	width: 90px;
+	height: 90px;
+  border: 1px solid #ffca91a5;
+  -webkit-animation: spin3D 1s linear 0s infinite;
+}
+.white-orbit {
+	width: 60px;
+	height: 60px;
+  border: 2px solid #ffffff;
+  -webkit-animation: spin3D 10s linear 0s infinite;
+}
+.w1 {
+  transform: rotate3D(1, 1, 1, 90deg);
+}
+.w2 {
+  transform: rotate3D(1, 2, .5, 90deg);
+}
+.w3 {
+  transform: rotate3D(.5, 1, 2, 90deg);
+}
+@keyframes spin3D {
+  from {
+    transform: rotate3d(.5,.5,.5, 360deg);
+  }
+  to{
+    transform: rotate3d(0deg);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* NAVBAR */
+.navbar{
+  z-index: 10;
+  max-height: 100px;
+  max-width: 1440px;
+}
+.navbar-brand img{
+  max-height: 100px;
+}
+.navbar .collapse .btn{
+  color: #fff !important;
+  background: linear-gradient(to bottom, #1c1f24 15%, #000000 100%);
+}
+.navbar .collapse .btn:hover{
+  background: linear-gradient(to top right, #000 15%, #1c1f24 100%);
+}
+
+/* HERO */
+#hero-cont{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.322);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+#hero-cont video {
+  position: absolute;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-text{
+  position: absolute;
+  z-index: 200;
+  max-width: 600px;
+  font-family: orbitron;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.hero-text span{
+  letter-spacing: 20px;
+}
+.hero-text h1{
+  font-size: 60px;
+}
+.hero-text p{
+  letter-spacing: 2px;
+}
+.hero-socials{
+  position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: right;
+  right: 25px;
+  bottom: 2%;
 }
-
-.App-link {
-  color: #61dafb;
+.hero-socials a{
+  text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+  margin-top: 10px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hero-socials span{
+  font-size: 16px;
 }
