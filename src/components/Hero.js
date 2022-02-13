@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import vidHero from '../Images/MARS.mp4'
 import {FaTelegramPlane} from 'react-icons/fa'
-import {AiFillSecurityScan} from 'react-icons/ai'
-import {MdSecurity} from 'react-icons/md'
+import bscscan from '../Images/bscscan.png'
+import ethscan from '../Images/ethscan.png'
+import vidHero from '../Images/MARS.m4v'
 
 export default function Hero() {
 
@@ -21,11 +21,12 @@ export default function Hero() {
         gsap.from(heroEth.current, {rotateZ:25, opacity:0, display:"none"})
         gsap.to(heroEth.current,{display: "inline-block", duration: 0.5, rotate: 0, delay:5.5, autoAlpha:1})
     },[])
-    
 
   return (
-    <div id="hero-cont">
-        <video src={vidHero} muted preLoad='auto' autoPlay={"autoplay"} loop></video>
+
+    <div style={{height:"100vh", width:"100%", position:"relative"}}>
+        <div id="hero-cont">
+        <video src={vidHero} muted preload='auto' autoPlay={"autoplay"} loop></video>
         <div className="overlay"></div>
         <div className='hero-text'>
             <span>WELCOME TO</span>
@@ -34,9 +35,9 @@ export default function Hero() {
         </div>
         <div className="hero-socials">
             <a href="https://t.me/MemeForceOfficial"><span ref={heroTele}>Telegram</span> <FaTelegramPlane/></a>
-            <a href="http://bscscan.com/"><span ref={heroBsc}>BSC Scan</span> <AiFillSecurityScan/></a>
-            <a href="https://etherscan.io/"><span ref={heroEth}>Ether Scan</span> <MdSecurity/></a>
-        </div>
+            <a href="http://bscscan.com/"><span ref={heroBsc}>BSC Scan</span> <img src={bscscan} alt=""/></a>
+            <a href="https://etherscan.io/"><span ref={heroEth}>Ether Scan</span> <img src={ethscan} alt=""/></a>
+        </div></div>
     </div>
   )
 }

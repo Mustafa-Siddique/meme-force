@@ -1,7 +1,10 @@
 .App{
   max-width: 1920px;
   margin: 0;
-  background-color: #0C0B0E;
+  background-image: url(./Images/stars.jpg);
+  background-attachment: fixed;
+  background-color: #191A1D;
+  background-blend-mode: overlay;
   padding: 0;
   color: #fff;
 }
@@ -142,6 +145,11 @@
   bottom: 100px;
   z-index: 10;
 }
+.hero-socials img{
+  max-height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+}
 .hero-socials a{
   text-decoration: none;
   color: #fff;
@@ -153,4 +161,276 @@
 }
 .hero-socials span{
   font-size: 16px;
+}
+
+/* KEYFEATURES */
+#keyfeature-cont{
+  width: 100%;
+  margin: 100px auto 100px auto;
+}
+#keyfeature-cont .container{
+  max-width: 1440px;
+  width:90%;
+}
+#keyfeature-cont .card{
+  background-color: transparent !important;
+  font-family: orbitron;
+}
+#keyfeature-cont .card-img-top{
+  max-height: 90px;
+  width: 90px !important;
+  background: transparent;
+  filter: invert(1);
+  margin: 25px auto 25px auto;
+}
+
+/* MEMEFORCE */
+#memeforce-cont{
+  background-color: rgba(0, 0, 0, 0.733);
+  margin: 100px auto 100px auto;
+}
+#memeforce-cont .row{
+  --bs-gutter-x:0;
+  width: 90%;
+  margin: auto;
+}
+#memeforce-cont h2{
+  font-family: orbitron;
+  font-weight: 700;
+  font-size: 36px;
+}
+#memeforce-cont p{
+  font-size: 20px;
+}
+.bsc-launch{
+  width: fit-content !important;
+  max-width: 450px !important;
+  height: 350px;
+  position: relative;
+}
+.bsc-launch .card-body{
+  font-family: orbitron;
+  letter-spacing: 2px;
+}
+#card-logo{
+  position: absolute;
+  bottom: -20px;
+  left: 45%;
+  background-color: #000;
+  font-size: 45px;
+}
+
+/* TOKENOMICS */
+#tokenomics-cont{
+  background: url(./Images/network.jpg.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.322);
+  margin: 100px auto 100px auto;
+}
+#tokenomics-cont h2{
+  font-size: 36px;
+  font-family: orbitron;
+  font-weight: 700;
+  text-align: center;
+}
+#tokenomics-cont .row{
+  width: 90%;
+  max-width: 1440px;
+  font-family: orbitron;
+  margin: auto;
+}
+#tokenomics-cont .row .col-lg-4{
+  background-color: rgba(0, 0, 0, 0.733);
+  min-width: 300px;
+  max-width: 450px;
+}
+#tokenomics-cont .row .col-lg-4:hover{
+  outline: 1px solid #fff;
+}
+#tokenomics-cont .row h2{
+  font-size: 70px;
+}
+#tokenomics-cont .row h3{
+  font-size: 26px;
+}
+
+/* ABOUT US */
+#about-cont{
+  padding-top: 100px;
+  padding-bottom: 100px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.733);
+  font-family: orbitron;
+}
+#about-cont .container{
+  width: 90%;
+  max-width: 1440px;
+}
+#about-cont h2{
+  font-size: 36px;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+#about-cont p{
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.about-socials{
+  max-width: 300px;
+  width: 100%;
+  margin: auto;
+}
+.about-socials a{
+  color: #fff;
+  text-decoration: none;
+  font-size: 36px;
+}
+.about-socials a:hover{
+  color: rgb(190, 190, 190);
+  transform: scale(1.1);
+}
+
+/* ROADMAP */
+#roadmap-cont{
+  text-align: center;
+  font-family: orbitron;
+  margin: 100px auto 100px auto;
+}
+#roadmap-cont h2{
+  font-size: 36px;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+#roadmap-cont .row{
+  max-width: 1440px;
+  width: 90%;
+}
+#roadmap-cont .phase ul{
+  list-style: none;
+  text-align: start;
+  font-size: 20px;
+}
+#roadmap-cont .phase ul li{
+  margin: 15px auto;
+  list-style-position: outside;
+}
+.phase{
+  width: fit-content !important;
+  max-width: 450px !important;
+  position: relative;
+}
+
+/* BSC TUTORIAL */
+#bsctut-cont{
+  text-align: start;
+  position: relative;
+  background: url(./Images/wireframe.png);
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-color: rgba(0, 0, 0, 0.733);
+  background-blend-mode: screen;
+  font-family: orbitron;
+  margin: 100px auto 100px auto;
+}
+#bsctut-cont .row{
+  width: 90%;
+  max-width: 1440px;
+  margin: auto;
+}
+#bsctut-cont h2{
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+#bsctut-cont h3{
+  font-size: 26px;
+  text-align: start;
+}
+#bsctut-cont p{
+  font-weight: 400;
+}
+#bsctut-cont iframe{
+  margin-top: 5%;
+  width: 100%;
+  height: 80%;
+}
+
+/* ETH TUTORIAL */
+#ethtut-cont{
+  text-align: start;
+  margin: 100px auto 100px auto;
+  position: relative;
+  background: url(./Images/wireframe.png);
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  font-family: orbitron;
+}
+#ethtut-cont .row{
+  width: 90%;
+  max-width: 1440px;
+  margin: auto;
+}
+#ethtut-cont h2{
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+#ethtut-cont h3{
+  font-size: 26px;
+  text-align: start;
+}
+#ethtut-cont p{
+  font-weight: 400;
+}
+#ethtut-cont iframe{
+  margin-top: 5%;
+  width: 100%;
+  height: 80%;
+}
+
+/* COMING SOON */
+#coming-cont{
+  padding-top: 100px;
+  background-color: rgba(0, 0, 0, 0.733);
+  padding-bottom: 100px;
+}
+#coming-cont h2{
+  font-size: 36px;
+  font-weight: 700;
+  font-family: orbitron;
+  text-align: center;
+}
+#coming-cont img{
+  max-height: 77px;
+  max-width: 300px;
+}
+
+/* FOOTER */
+#footer-cont h2{
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-family: orbitron;
+}
+.foot-socials{
+  width: 90%;
+  margin: auto;
+  max-width: 700px;
+}
+.foot-socials a{
+  color: #fff;
+  background: linear-gradient(to bottom, #1c1f24 15%, #000000 100%);
+  text-decoration: none;
+  margin: 25px auto;
+}
+.foot-socials a:hover{
+  color: #fff;
+  background: linear-gradient(to top right, #000 15%, #1c1f24 100%);
+}
+.foot-socials img{
+  max-height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
 }
