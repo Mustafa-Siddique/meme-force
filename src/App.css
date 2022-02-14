@@ -330,7 +330,7 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   background-color: rgba(0, 0, 0, 0.733);
-  background-blend-mode: screen;
+  background-blend-mode: overlay;
   font-family: orbitron;
   margin: 100px auto 100px auto;
 }
@@ -364,6 +364,8 @@
   position: relative;
   background: url(./Images/wireframe.png);
   background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.733);
+  background-blend-mode: overlay;
   background-position: bottom left;
   font-family: orbitron;
 }
@@ -393,7 +395,6 @@
 /* COMING SOON */
 #coming-cont{
   padding-top: 100px;
-  background-color: rgba(0, 0, 0, 0.733);
   padding-bottom: 100px;
 }
 #coming-cont h2{
@@ -406,8 +407,19 @@
   max-height: 77px;
   max-width: 300px;
 }
+#cg{
+  height: 85%;
+}
+#cmc{
+  height: 77px;
+}
 
 /* FOOTER */
+#footer-cont{
+  padding-bottom: 50px;
+  padding-top: 100px;
+  background-color: rgba(0, 0, 0, 0.733);
+}
 #footer-cont h2{
   font-size: 36px;
   text-align: center;

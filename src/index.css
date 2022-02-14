@@ -25,6 +25,21 @@ code {
   .bsc-launch h2{
     font-size: 32px;
   }
+  .phase{
+    margin: 25px auto;
+  }
+  .phase .card-body{
+    padding: 0;
+  }
+  #keyfeature-cont{
+    margin: 50px auto;
+  }
+  #keyfeature-cont .card{
+    margin: 25px auto;
+  }
+  #keyfeature-cont .card-body{
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -40,5 +55,11 @@ code {
   }
   .foot-socials{
     flex-direction: column;
+  }
+  .navbar-collapse .active{
+    margin: auto !important;
+  }
+  #tokenomics-cont .row .col-lg-4{
+    margin: 25px auto;
   }
 }

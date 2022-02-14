@@ -1,6 +1,6 @@
 import './App.css';
 import Loader from './components/Loader';
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Keyfeatures from './components/Keyfeatures';
