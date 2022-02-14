@@ -3,7 +3,7 @@ import logo from "../Images/logo.png";
 
 export default function Navbar() {
   return (
-    <div style={{width:"100vw", position:"absolute", zIndex:"11"}}>
+    <div style={{width:"100%", position:"absolute", zIndex:"11"}}>
       <nav className="navbar mx-auto navbar-expand-lg navbar-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
