@@ -90,7 +90,7 @@
 }
 .navbar .collapse .btn{
   color: #fff !important;
-  background: linear-gradient(to bottom, #1c1f24 15%, #000000 100%);
+  background: linear-gradient(to top left, #1c1f24 15%, #000000 100%);
 }
 .navbar .collapse .btn:hover{
   background: linear-gradient(to top right, #000 15%, #1c1f24 100%);
@@ -445,4 +445,8 @@
   max-height: 20px;
   background-color: #fff;
   border-radius: 50%;
+}
+.launchpad-container{
+  background-image: url("./Images/bg-map.png");
+  background-color: #1A1A1A;
 }

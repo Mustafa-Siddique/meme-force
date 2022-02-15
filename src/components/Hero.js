@@ -4,6 +4,7 @@ import {FaTelegramPlane} from 'react-icons/fa'
 import bscscan from '../Images/bscscan.png'
 import ethscan from '../Images/ethscan.png'
 import vidHero from '../Images/MARS.m4v'
+import {Link} from 'react-router-dom'
 
 export default function Hero() {
 
@@ -32,6 +33,7 @@ export default function Hero() {
             <span>WELCOME TO</span>
             <h1>MEMEFORCE</h1>
             <p>MemeForce is the next big cross-chain launchpad project, available on the Binance SmartChain and Ethereum Mainnet.</p>
+            <Link style={{outline:"none", background:"linear-gradient(to top right, #1c1f24 15%, #000000 100%)", color:"#fff", padding:"8px 25px", textDecoration:"none", letterSpacing:"2px", borderRadius:"5px"}} to='/launchpad'>Launchpad</Link>
         </div>
         <div className="hero-socials">
             <a href="https://t.me/MemeForceOfficial"><span ref={heroTele}>Telegram</span> <FaTelegramPlane/></a>

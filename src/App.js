@@ -1,17 +1,8 @@
 import './App.css';
 import Loader from './components/Loader';
-import {BrowserRouter as Router} from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Keyfeatures from './components/Keyfeatures';
-import Memeforce from './components/Memeforce';
-import Tokenomics from './components/Tokenomics';
-import About from './components/About';
-import Roadmap from './components/Roadmap';
-import BSCtutorial from './components/BSCtutorial';
-import ETHtutorial from './components/ETHtutorial';
-import ComingSoon from './components/ComingSoon';
-import Footer from './components/Footer';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Home from './components/Home';
+import Launchpad from './components/Launchpad';
 
 function App() {
 
@@ -19,17 +10,10 @@ function App() {
     <Router>
       <div className="App">
         <Loader/>
-        <Navbar/>
-        <Hero/>
-        <Keyfeatures/>
-        <Memeforce/>
-        <Tokenomics/>
-        <About/>
-        <Roadmap/>
-        <BSCtutorial/>
-        <ETHtutorial/>
-        <ComingSoon/>
-        <Footer/>
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path='/launchpad' element={<Launchpad/>}/>
+      </Routes>
       </div>
     </Router>
   );
