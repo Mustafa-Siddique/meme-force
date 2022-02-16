@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../Images/logo.png";
+import fav from '../Images/logo192.png'
 
 export default function Navlaunch() {
   return (
@@ -29,14 +30,19 @@ export default function Navlaunch() {
               </li>
               <li className="nav-item">
                 <a className="nav-link active mx-3" href="/">
-                  ETH CHART
+                  <img src={fav} style={{height:"25px"}} alt="" /> $0.0005
                 </a>
-              </li> */}
+              </li>
               <li className="nav-item">
                 <button className="nav-link rounded btn px-3">BUY NOW</button>
-              </li>
+              </li> */}
             </ul>
           </div>
+          <div className="mob-rate d-lg-none">
+                <a className="nav-link active mx-3" href="/">
+                  <img src={fav} style={{height:"25px"}} alt="" /> $0.0005
+                </a>
+            </div>
         </div>
       </nav>
     </div>

@@ -95,6 +95,30 @@
 .navbar .collapse .btn:hover{
   background: linear-gradient(to top right, #000 15%, #1c1f24 100%);
 }
+.mob-rate a{
+  color: #fff;
+  text-decoration: none;
+}
+
+/* BOTTOM NAVBAR */
+.bottomNav {
+  background-color: #943862;
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  bottom: 0;
+}
+.bottomNav #mob-link {
+  text-decoration: none;
+  color: #fff;
+}
+.bottomNav button {
+  color: #fff;
+  font-size: 10px;
+}
+.bottomNav button:hover {
+  color: #fff;
+}
 
 /* HERO */
 #hero-cont{
@@ -446,7 +470,101 @@
   background-color: #fff;
   border-radius: 50%;
 }
+
+/* LAUNCHPAD */
 .launchpad-container{
   background-image: url("./Images/bg-map.png");
   background-color: #1A1A1A;
+  background-size: contain;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* OPEN PROJECTS */
+#openProject-cont .row .col-md-3{
+  background-color: #212121;
+  min-width: 320px;
+}
+#openProject-cont .row{
+  --bs-gutter-x: 0 !important;
+  max-width: 1440px;
+  margin: auto;
+}
+.card-head{
+  display: flex;
+}
+.card-head .logo{
+  min-height: fit-content;
+  min-width: fit-content;
+  height: 125px;
+  width: 125px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.card-head #brand-bg{
+position: absolute;
+height: inherit;
+width: inherit;
+transition-duration: 5s;
+}
+#openProject-cont .row .col-md-3:hover #brand-bg{
+  transform: rotate(360deg);
+  transition-duration: 10s;
+}
+.card-head .logo #brand{
+  border-radius: 50%;
+  height: 90px;
+  margin: auto;
+  width: 90px;
+  transition-duration: 5s;
+}
+#openProject-cont .row .col-md-3:hover #brand{
+  transform: scale(1.2);
+  transition-duration: 10s;
+}
+#social-cards{
+  margin: 25px auto;
+}
+#social-cards a{
+  color: #fff;
+  font-size: 20px;
+  margin: auto 5px;
+  border-radius: 100%;
+  padding: 5px 13px 12px 15px;
+  background-color: rgba(0, 0, 0, 0.616);
+}
+#social-cards a:hover span{
+  color: #B9446F;
+}
+.sale-stat{
+  background-color: #591919;
+  width: fit-content;
+  padding: 3px 15px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+.chain{
+  background-color: #56481D;
+  width: fit-content;
+  padding: 3px 15px;
+  font-size: 14px;
+  border-radius: 25px;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+.rate p, .cap p, .schc p, .access p, .raised p{
+  font-size: 12px;
+  margin: 0;
+  color: #999999;
+}
+.rate span, .cap span, .schc span, .access span{
+  font-size: 16px;
+  font-weight: 500;
+}
+.progress-bar{
+  background-color: #B9446F !important;
 }

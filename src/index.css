@@ -13,6 +13,9 @@ code {
 }
 
 @media screen and (max-width: 992px) {
+  .navbar-toggler{
+    display: none;
+  }
   #keyfeature-cont .container {
     flex-direction: column;
   }
@@ -39,6 +42,14 @@ code {
   }
   #keyfeature-cont .card-body{
     text-align: center;
+  }
+  #openProject-cont .row{
+    width: 90%;
+  }
+  #social-cards a{
+    font-size: 16px;
+    margin: auto 3px;
+    padding: 5px 13px 12px 13px;
   }
 }
 
