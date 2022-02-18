@@ -47,9 +47,9 @@ export default function ProjectsOpen() {
           <div className="head-content">
             <h3><Link className='text-light text-decoration-none' to="/launchpad/project">{projectInfo.name}</Link></h3>
             <div id="social-cards">
-              <a href="#"><span><FaGlobe /></span></a>
-              <a href="#"><span><FaTwitter /></span></a>
-              <a href="#"><span><FaTelegramPlane /></span></a>
+              <a href="/"><span><FaGlobe /></span></a>
+              <a href="/"><span><FaTwitter /></span></a>
+              <a href="/"><span><FaTelegramPlane /></span></a>
             </div>
             <div className="sale-stat">&bull; Open</div>
             <div className="chain">BNB</div>
