@@ -23,22 +23,9 @@ export default function Navlaunch() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              {/* <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
-                  BSC CHART
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active mx-3" href="/">
-                  <img src={fav} style={{height:"25px"}} alt="" /> $0.0005
-                </a>
-              </li>
-              <li className="nav-item">
-                <button className="nav-link rounded btn px-3">BUY NOW</button>
-              </li> */}
             </ul>
           </div>
-          <div className="mob-rate d-lg-none">
+          <div className="mob-rate">
                 <a className="nav-link active mx-3" href="/">
                   <img src={fav} style={{height:"25px"}} alt="" /> $0.0005
                 </a>

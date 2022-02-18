@@ -14,11 +14,11 @@ export default function Roadmap() {
                         <div className="card-body border-top">
                             <ul>
                                 <li>Deploy Smart Contract</li>
-                                <li>Presale on Pinksale</li>
-                                <li>Listing on Pancakeswap</li>
-                                <li>Uniswap stealth launch</li>
+                                <li>Launch on Pancakeswap</li>
+                                <li>Listing on Uniswap</li>
                                 <li>Heavy post launch and ongoing marketing</li>
                                 <li>Release Whitepaper V1</li>
+                                <li>Bridge implementation</li>
                                 <li>CoinGecko / CoinMarketCap listing</li>
                                 <li>Giveaway & Contests</li>
                             </ul>
@@ -32,10 +32,9 @@ export default function Roadmap() {
                             <ul>
                                 <li>Huge Marketing Campaign</li>
                                 <li>Smart Contract audit</li>
-                                <li>Bridge implementation</li>
+                                <li>P2E Beta </li>
                                 <li>Launchpad launch</li>
                                 <li>Merchandise</li>
-                                <li>NFT collection</li>
                             </ul>
                         </div>
                     </div>
@@ -46,9 +45,10 @@ export default function Roadmap() {
                         <div className="card-body border-top">
                             <ul>
                                 <li>Large influencer marketing</li>
-                                <li>P2E Beta </li>
                                 <li>Roadmap update</li>
                                 <li>CEX listings</li>
+                                <li>Staking and Farming</li>
+                                <li>NFT collection</li>
                                 <li>P2E game release</li>
                                 <li>Further ecosystem development</li>
                             </ul>

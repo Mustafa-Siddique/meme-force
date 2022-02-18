@@ -489,6 +489,7 @@
   --bs-gutter-x: 0 !important;
   max-width: 1440px;
   margin: auto;
+  justify-content: space-between;
 }
 .card-head{
   display: flex;

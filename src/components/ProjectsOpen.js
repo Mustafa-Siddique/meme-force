@@ -1,9 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect }  from 'react'
 import logoBg from '../Images/anim-icon.png'
 import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
+import Countdown from './Countdown';
+import {Link} from 'react-router-dom'
 
 export default function ProjectsOpen() {
 
+  const countdownDate = "2022-02-28 17:00";
+  const [
+    {
+      expired,
+      values: { days, hours, minutes, seconds }
+    },
+    setResult
+  ] = useState(() => Countdown(countdownDate));
+
+  useEffect(() => {
+    if (expired) return undefined;
+    const intervalId = setInterval(
+      () => setResult(Countdown(countdownDate)),
+      1000
+    );
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [expired]);
+
+  /* Array to be fetched */
   const projectInfo = [
     { logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", name: "Meme Force", website: "#", twitter: "#", tg: "#", summary: "lorem ipsum", swapRate: "12546", cap: "200000", access: "WL", sc: "500", hc: "700" },
     { logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60", name: "Meme Force", website: "#", twitter: "#", tg: "#", summary: "lorem ipsum", swapRate: "12546", cap: "200000", access: "WL", sc: "500", hc: "700" },
@@ -22,7 +45,7 @@ export default function ProjectsOpen() {
             <img src={projectInfo.logo} id="brand" alt="" />
           </div>
           <div className="head-content">
-            <h3>{projectInfo.name}</h3>
+            <h3><Link className='text-light text-decoration-none' to="/launchpad/project">{projectInfo.name}</Link></h3>
             <div id="social-cards">
               <a href="#"><span><FaGlobe /></span></a>
               <a href="#"><span><FaTwitter /></span></a>
@@ -70,8 +93,11 @@ export default function ProjectsOpen() {
     <div id='openProject-cont'>
       <div className="container text-center my-5">
         <h1>PROJECTS OPEN NOW</h1>
+        <div className="countDown h3">
+          {expired ? "It's the time" : `${days}D ${hours}H ${minutes}M ${seconds}s`}
+        </div>
       </div>
-      <div className='row justify-content-between'>
+      <div className='row'>
         {projectInfo.map(renderOwner)}
       </div>
     </div>

@@ -73,4 +73,7 @@ code {
   #tokenomics-cont .row .col-lg-4{
     margin: 25px auto;
   }
+  #openProject-cont .row{
+    justify-content: center;
+  }
 }

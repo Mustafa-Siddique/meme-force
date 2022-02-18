@@ -14,6 +14,9 @@ export default function Footer() {
             <a href="https://t.me/MemeForceOfficial" className="btn">CHECK BSCSCAN <img src={bscscan} alt=''/></a>
             <a href="https://t.me/MemeForceOfficial" className="btn">CHECK ETHERSCAN <img src={ethscan} alt="" /></a>
         </div>
+        <div className="container text-center">
+          <p>Copyright &copy; 2022. All Rights Reserved by Meme-Force</p>
+        </div>
     </div>
   )
 }
