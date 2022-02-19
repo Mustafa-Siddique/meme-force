@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Countdown(nextDate) {
     const now = new Date().getTime();
     const distance = new Date(nextDate).getTime() - now;
@@ -23,10 +21,5 @@ export default function Countdown(nextDate) {
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000)
         }
-      };
-  return (
-    <div>
-
-    </div>
-  )
+      }
 }

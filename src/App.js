@@ -15,9 +15,8 @@ function App() {
         <Bottomnav/>
       <Routes>
           <Route path="/" element={<Home />} />
-          <Route path='launchpad' element={<Launchpad/>}>
-            <Route path='project' element={<Project/>}/>
-          </Route>
+          <Route path='/launchpad' element={<Launchpad/>}/>
+          <Route path='/launchpad/project' element={<Project/>}/>
       </Routes>
       </div>
     </Router>

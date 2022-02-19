@@ -1,6 +1,5 @@
 import React from 'react'
 import Navlaunch from './Navlaunch'
-import Project from './Project'
 import ProjectsOpen from './ProjectsOpen'
 
 export default function Launchpad() {
