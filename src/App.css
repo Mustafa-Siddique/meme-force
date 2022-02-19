@@ -580,17 +580,22 @@
 /* PROJECT PAGE */
 
 /*Project bg animation*/
-.project-cont {
-  position: relative;
+#project-cont {
+  height: max-content;
 }
 .project-bg {
-  position: absolute;
-  height: 100vh;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
+  object-fit: cover;
   background-color: #131417;
   position: absolute;
   overflow: hidden;
   z-index: 0;
+}
+#home-anim{
+  height: 100%;
+  width: 100%;
 }
 .project-bg #home {
   clip-path: url(#cache);
@@ -663,6 +668,9 @@
   max-width: 1440px;
   margin: auto;
 }
+#project-cont .container-fluid .cont{
+  justify-content: space-around;
+}
 .project-head .logo img{
   height: 90px;
   width: 90px;
@@ -682,4 +690,39 @@
 .project-head .logo:hover #project-logo-anim{
   transform: rotate(360deg);
   transition-duration: 10s;
+}
+.token-desc{
+  background: linear-gradient(to left, #660033 0%, #cc0066 100%);
+  padding: 20px;
+  border-radius: 20px;
+}
+#swapFrom{
+  min-width: 200px;
+  background: url("./Images/binance.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  outline: none;
+  padding: 5px 15px 5px 15px;
+  border: 1px dotted #fff;
+  border-radius: 5px;
+  background-color: transparent;
+  margin: auto;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+}
+#swapTo{
+  min-width: 200px;
+  background: url("./Images/mf.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  outline: none;
+  padding: 5px 15px 5px 15px;
+  border: 1px dotted #fff;
+  border-radius: 5px;
+  background-color: transparent;
+  margin: auto;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
 }

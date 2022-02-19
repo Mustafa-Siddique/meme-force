@@ -54,6 +54,9 @@ code {
 }
 
 @media screen and (max-width: 768px) {
+  .App{
+    padding-bottom: 75px;
+  }
   .hero-text {
     width: 350px;
   }
@@ -74,6 +77,12 @@ code {
     margin: 25px auto;
   }
   #openProject-cont .row{
+    justify-content: center;
+  }
+  .project-bg {
+    display: none;
+  }
+  #project-cont .container-fluid .cont{
     justify-content: center;
   }
 }
