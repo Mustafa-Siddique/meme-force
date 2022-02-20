@@ -79,9 +79,6 @@ code {
   #openProject-cont .row{
     justify-content: center;
   }
-  .project-bg {
-    display: none;
-  }
   #project-cont .container-fluid .cont{
     justify-content: center;
   }

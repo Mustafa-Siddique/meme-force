@@ -5,6 +5,9 @@ import Home from './components/Home';
 import Launchpad from './components/Launchpad';
 import Bottomnav from './components/Bottomnav';
 import Project from './components/Project';
+import ProjectDetails from './components/ProjectDetails';
+import Schedule from './components/Schedule';
+import Allocation from './components/Allocation';
 
 function App() {
 
@@ -16,7 +19,11 @@ function App() {
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/launchpad' element={<Launchpad/>}/>
-          <Route path='/launchpad/project' element={<Project/>}/>
+          <Route path='/launchpad/project' element={<Project/>}>
+            <Route path='projectdetails' element={<ProjectDetails/>}/>
+            <Route path='schedule' element={<Schedule/>}/>
+            <Route path='allocation' element={<Allocation/>}/>
+          </Route>
       </Routes>
       </div>
     </Router>

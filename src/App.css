@@ -539,7 +539,8 @@
   color: #b9446f;
 }
 .sale-stat {
-  background-color: #591919;
+  /* background-color: #591919; */
+  background-color: green;
   width: fit-content;
   padding: 3px 15px;
   border-radius: 25px;
@@ -597,71 +598,31 @@
   height: 100%;
   width: 100%;
 }
-.project-bg #home {
-  clip-path: url(#cache);
+.project-bg{
+  height: 100%;
+  width: 100%;
 }
-
-.project-bg #red {
-  fill: none;
-  opacity: 0.15;
-  stroke: #5e434c85;
-  stroke-width: 12;
-  stroke-miterlimit: 10;
-  animation: show 4s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-
-.project-bg #blue {
-  fill: none;
-  opacity: 0.15;
-  stroke: #1a1a1a;
-  stroke-width: 12;
-  stroke-miterlimit: 10;
-  animation: show 4s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-
-.project-bg #light-blue {
-  fill: none;
-  opacity: 0.15;
-  stroke: #bc3e6a;
-  stroke-width: 6;
-  stroke-miterlimit: 10;
-  stroke-dasharray: 200;
-  stroke-dashoffset: 800;
-  animation: draw 4s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes show {
-  0% {
-    opacity: 0.15;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 0.15;
-  }
+.project-bg video{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 .project-head .logo{
   width: 125px;
   height: 125px;
   display: flex;
+  z-index: -999;
   align-items: center;
   justify-content: center;
+}
+.project-bg .bgMask{
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  background: #76023B;
+  opacity: 10%;
 }
 #project-cont .container-fluid{
   width: 100%;
@@ -677,7 +638,7 @@
   border-radius: 50%;
   transition-duration: 5s;
 }
-.project-head .logo:hover img{
+.project-head:hover img{
   transform: scale(1.2);
   transition-duration: 10s;
 }
@@ -687,7 +648,7 @@
   transition-duration: 5s;
   width: inherit;
 }
-.project-head .logo:hover #project-logo-anim{
+.project-head:hover #project-logo-anim{
   transform: rotate(360deg);
   transition-duration: 10s;
 }
@@ -697,7 +658,7 @@
   border-radius: 20px;
 }
 #swapFrom{
-  min-width: 200px;
+  width: 100%;
   background: url("./Images/binance.png");
   background-repeat: no-repeat;
   background-position: right;
@@ -712,7 +673,7 @@
   font-weight: 500;
 }
 #swapTo{
-  min-width: 200px;
+  width: 100%;
   background: url("./Images/mf.png");
   background-repeat: no-repeat;
   background-position: right;
@@ -725,4 +686,15 @@
   color: #fff;
   font-size: 18px;
   font-weight: 500;
+}
+.projectTable .nav-link{
+  color: #fff;
+}
+.projectTable .nav-link:hover{
+  color: rgb(148, 148, 148);
+}
+.projectTable .nav-item .active{
+  background: linear-gradient(to left, #660033 0%, #cc0066 100%);
+  color: #fff !important;
+  border: none;
 }

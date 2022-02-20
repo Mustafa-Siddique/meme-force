@@ -45,7 +45,7 @@ export default function ProjectsOpen() {
             <img src={projectInfo.logo} id="brand" alt="" />
           </div>
           <div className="head-content">
-            <h3><Link className='text-light text-decoration-none' to="/launchpad/project">{projectInfo.name}</Link></h3>
+            <h3><Link className='text-light text-decoration-none' to="/launchpad/project/projectdetails">{projectInfo.name}</Link></h3>
             <div id="social-cards">
               <a href="/"><span><FaGlobe /></span></a>
               <a href="/"><span><FaTwitter /></span></a>
