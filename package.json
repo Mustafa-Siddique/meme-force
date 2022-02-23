@@ -5,6 +5,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.2",
     "@react-three/fiber": "^7.0.26",
+    "@sanity/client": "^3.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
