@@ -12,6 +12,17 @@ code {
     monospace;
 }
 
+@media screen and (max-width: 1376px) {
+  
+#openProject-cont .row {
+  max-width: 1200px;
+}
+  #social-cards a{
+    font-size: 16px;
+    margin: auto 3px;
+    padding: 5px 13px 12px 13px;
+  }
+}
 @media screen and (max-width: 992px) {
   .navbar-toggler{
     display: none;
