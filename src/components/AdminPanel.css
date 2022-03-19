@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300&display=swap");
+
+* {
+  font-family: "Orbitron", sans-serif;
+}
+
+section {
+  max-width: 1440px;
+  margin: auto;
+}
+/* NAVBAR */
+li {
+  margin-right: 25px;
+}
+a.bmw {
+  color: white;
+  text-decoration: none;
+  margin-left: 10px;
+  transition: 0.4s ease-out;
+}
+a.bmw:hover {
+  text-decoration: underline;
+  color: #bf5079;
+  cursor: pointer;
+}
+/* CREATE PRESALE */
+.presale-container {
+  margin: 50px 0px 40px;
+}
+.showpresale-container {
+  padding: 20px 20px 5px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+.presale-content.d-flex.align-items-center.justify-content-between {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+label.form-label {
+  padding-top: 20px;
+  font-size: 17px;
+}
+.Token-Address {
+  display: grid;
+  grid-gap: 14px;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.75rem !important;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* COMMUNITY */
+
+a.links {
+  text-decoration: none;
+  color: #ffff;
+  font-size: 22px;
+  transition: 0.4s ease-out;
+}
+
+a.links:hover {
+  text-decoration: underline;
+  color: #bf5079;
+  cursor: pointer;
+}
