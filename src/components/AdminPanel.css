@@ -74,3 +74,66 @@ a.links:hover {
   color: #bf5079;
   cursor: pointer;
 }
+
+@media screen and (max-width: 540px) {
+  .community-container.d-flex.align-items-center.justify-content-between {
+    padding-top: 20px;
+    margin-left: 20px !important;
+  }
+  .presale-content.d-flex.align-items-center.justify-content-between {
+    margin-left: 20px !important;
+    margin-right: 50px !important;
+  }
+  .showpresale-container {
+    padding: 20px 20px 5px;
+    margin-left: 20px !important;
+    margin-right: 50px !important;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .navbar-brand img {
+    max-height: 70px;
+  }
+  a.bmw {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: 0.4s ease-out;
+    font-size: 12px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .presale-content.d-flex.align-items-center.justify-content-between {
+    margin-left: 11px !important;
+    margin-right: 11px !important;
+  }
+  .community-container.d-flex.align-items-center.justify-content-between {
+    display: grid !important;
+  }
+  .showpresale-container {
+    padding: 20px 20px 5px;
+    margin-left: 11px !important;
+    margin-right: 11px !important;
+  }
+  .navbar-brand img {
+    max-height: 50px;
+  }
+  a.bmw {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: 0.4s ease-out;
+    font-size: 10px;
+    margin-right: 20px;
+  }
+  h1.woc {
+    font-size: 19px;
+  }
+  .community-content {
+    text-align: center;
+    padding-top: 30px;
+  }
+}

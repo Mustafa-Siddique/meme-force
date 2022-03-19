@@ -323,7 +323,7 @@ export default function CreatePresale() {
           }}
         >
           <div className="community-content" style={{ paddingBottom: "20px" }}>
-            <h1>Welcome to our community</h1>
+            <h1 className="woc">Welcome to our community</h1>
           </div>
           <div
             className="community-links"
