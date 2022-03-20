@@ -3,7 +3,7 @@ import logoBg from "../Images/anim-icon.png";
 import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
 import Countdown from "./Countdown";
 import { Link } from "react-router-dom";
-// import Client from "../Client";
+import Client from "../Client";
 
 export default function ProjectsOpen() {
   /* COUNTDOWN */
@@ -27,99 +27,29 @@ export default function ProjectsOpen() {
     };
   }, [expired]);
 
-  const projectInfo = [
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-    {
-      logo: "https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGxvZ298ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-      name: "Meme Force",
-      website: "#",
-      twitter: "#",
-      tg: "#",
-      summary: "lorem ipsum",
-      swapRate: "12546",
-      cap: "200000",
-      access: "WL",
-      sc: "500",
-      hc: "700",
-    },
-  ];
   /* Array to be fetched */
 
-  // const [projectInfo, setProjectCards] = useState();
-  // useEffect(() => {
-  //   Client.fetch(
-  //     `*[_type == "projectCards"]{
-  //         name
-  //     }`
-  //   )
-  //     .then((data) => setProjectCards(data))
-  //     .catch(console.error);
-  //   console.log(projectInfo);
-  // }, [projectInfo]);
+  const [projectInfo, setProjectCards] = useState([]);
+  useEffect(() => {
+    Client.fetch(
+      `*[_type == "projectCards"]{
+          name,
+          tracker,
+          summary,
+          website,
+          rate,
+          chain,
+          isOpen,
+          access,
+          mcap,
+          telegram,
+          twitter,
+          schc
+        }`
+    )
+      .then((data) => setProjectCards(data))
+      .catch(console.error);
+  }, []);
 
   const renderOwner = (projectInfo, index) => {
     return (
@@ -128,60 +58,66 @@ export default function ProjectsOpen() {
           <div className="logo me-3">
             <img src={logoBg} alt="" id="brand-bg" />
             <img src={projectInfo.logo} id="brand" alt="" />
+            {/* {console.log(projectInfo.image)} */}
           </div>
           <div className="head-content">
             <h3>
               <Link
                 className="text-light text-decoration-none"
-                to="/launchpad/project/projectdetails"
+                to="/launchpad/project"
               >
                 {projectInfo.name}
               </Link>
             </h3>
             <div id="social-cards">
-              <a href="/">
+              <a href={`${projectInfo.website}`}>
                 <span>
                   <FaGlobe />
                 </span>
               </a>
-              <a href="/">
+              <a href={`${projectInfo.twitter}`}>
                 <span>
                   <FaTwitter />
                 </span>
               </a>
-              <a href="/">
+              <a href={`${projectInfo.telegram}`}>
                 <span>
                   <FaTelegramPlane />
                 </span>
               </a>
             </div>
-            <div className="sale-stat">&bull; Open</div>
-            <div className="chain">BNB</div>
+            <div
+              className={
+                projectInfo.isOpen === true
+                  ? `sale-stat`
+                  : `sale-stat bg-danger`
+              }
+            >
+              &bull; {projectInfo.isOpen === true ? "Open" : "Close "}
+            </div>
+            <div className="chain">{projectInfo.chain}</div>
           </div>
         </div>
         <div className="card-body">
-          <p className="fs-6">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia,
-            optio doloribus reiciendis velit cupiditate sapiente eius animi vel
-            ullam quo? Accusamus rem, magnam aut non corrupti nobis porro
-            ducimus accusantium?
-          </p>
+          <p className="fs-6">{projectInfo.summary}</p>
           <div className="rate">
             <p>Swap rate</p>
-            <span>1 BNB = 200 MEMEFORCE</span>
+            <span>
+              1 BNB = {projectInfo.rate} {projectInfo.tracker}
+            </span>
           </div>
           <div className="tokenomics d-flex justify-content-between mt-2">
             <div className="cap">
               <p>Cap</p>
-              <span>300k</span>
+              <span>{projectInfo.mcap}</span>
             </div>
             <div className="schc">
               <p>SC/HC</p>
-              <span>250/350</span>
+              <span>{projectInfo.schc}</span>
             </div>
             <div className="access text-center">
               <p>Access</p>
-              <span>WL</span>
+              <span>{projectInfo.access}</span>
             </div>
           </div>
           <div className="raised mt-3">

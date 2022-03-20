@@ -358,7 +358,7 @@ export default function CreatePresale() {
               <li style={{ listStyle: "none" }}>
                 <a
                   className="links"
-                  href="https://twitter.com/MemeForce_LP"
+                  href="/"
                   target="_blank"
                   rel="noreferrer"
                 >

@@ -2,8 +2,12 @@ import React, {useState} from "react";
 import logoBg from "../Images/anim-icon.png";
 import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
 import Navlaunch from "./Navlaunch";
-import { Link, Outlet } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import vidProject from '../Images/projectbg.mp4'
+import ProjectDetails from "./ProjectDetails";
+import Schedule from "./Schedule";
+// import { Button } from "bootstrap";
+import Allocation from "./Allocation";
 
 export default function Project() {
 
@@ -169,26 +173,26 @@ export default function Project() {
         <div className="projectTable mt-5">
           <ul className="nav nav-tabs">
             <li className="nav-item">
-              <Link className={activeTab === 1? "nav-link active":"nav-link"} aria-current="page" onClick={()=> toggleActive(1)} to="/launchpad/project/projectdetails">
+              <button className={activeTab === 1? "nav-link active":"nav-link"} aria-current="page" onClick={()=> toggleActive(1)}>
                 Project Details
-              </Link>
+              </button>
             </li>
             <li className="nav-item">
-              <Link className={activeTab === 2? "nav-link active":"nav-link"} onClick={()=> toggleActive(2)} to="/launchpad/project/schedule">
+              <button className={activeTab === 2? "nav-link active":"nav-link"} onClick={()=> toggleActive(2)}>
                 Schedule
-              </Link>
+              </button>
             </li>
             <li className="nav-item">
-              <Link className={activeTab === 3? "nav-link active":"nav-link"} onClick={()=> toggleActive(3)} to="/launchpad/project/allocation">
+              <button className={activeTab === 3? "nav-link active":"nav-link"} onClick={()=> toggleActive(3)}>
                 Your Allocation
-              </Link>
+              </button>
             </li>
           </ul>
           <div className="container-fluid mt-2">
-              <Outlet/>
+            {activeTab === 1 ? <ProjectDetails/>: activeTab === 2 ? <Schedule/> : <Allocation/>}
           </div>
         </div>
-      </div>
+      </div>  
     </div>
   );
 }
