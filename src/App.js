@@ -18,7 +18,7 @@ function App() {
         <Bottomnav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/launchpad" element={<Launchpad />} />
+          <Route path="/launchpad" element={<Launchpad/>} />
           <Route path="/launchpad/project" element={<Project />} />
           <Route path="/launchpad/admin-panel" element={<AdminPanel />} />
           {/* <Route path="projectdetails" element={<ProjectDetails />} />

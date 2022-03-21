@@ -59,6 +59,12 @@ export default function CreatePresale() {
       // console.log(CreateSale)
     }
   };
+
+  const SubmitCreate =()=>{
+    
+  }
+
+  
   return (
     <>
       <section>

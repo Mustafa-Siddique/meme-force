@@ -6,18 +6,64 @@ import Navlaunch from "./Navlaunch";
 import vidProject from '../Images/projectbg.mp4'
 import ProjectDetails from "./ProjectDetails";
 import Schedule from "./Schedule";
+import Metamask from "./../Images/metamask.png";
+import WalletConnect from "./../Images/walletconnect.png";
+import {getAccount, loginProcess} from './../components/Web/web3_methods'
+import {SelectWallet} from './../components/Web/web3'
 // import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 
 export default function Project() {
 
     const [activeTab, setActiveTab] = useState(1)
+    const [modal, setModal] = useState(false);
+    const [account, setAccount] = useState(undefined);
     
     const toggleActive = (num) => {
         setActiveTab(num)
     }
 
+    const toggleModal = () => {
+      setModal(!modal);
+    };
+    if (modal) {
+      document.body.classList.add("active-modal");
+    } else {
+      document.body.classList.remove("active-modal");
+    }
+
+    const ConnectMetaMask =async()=> {
+      window.WC = false
+      window.MM = true
+      await SelectWallet();
+      await loginProcess();
+      const acount = await getAccount();
+      setAccount(acount);
+      window.account = account
+      toggleModal()
+    
+    }
+    
+    const ConnectWallet =async()=>{
+      window.WC = true
+      window.MM = false
+      await SelectWallet();
+      const acount = await getAccount();
+      setAccount(acount);
+      window.account = account
+      toggleModal()
+    }
+
+    const slicing = (address) => {
+      const first = address.slice(0,10);
+      const second = address.slice(32);
+      return first + "...." + second
+    }
+    
+  
   return (
+    <>
+ 
     <div id="project-cont">
       <div className="project-bg">
           <div className="bgMask"></div>
@@ -71,6 +117,19 @@ export default function Project() {
                   eius animi vel ullam quo? Accusamus rem, magnam aut non
                   corrupti nobis porro ducimus accusantium?
                 </p>
+                <button
+                    className="btn mt-4"
+                    style={{
+                      backgroundColor: "#660033",
+                      border: "none",
+                      borderRadius: "5px",
+                      color: "#fff",
+                      width: "100%",
+                    }}
+                    onClick={()=>toggleModal()}
+                  >
+                    {!account ? "Connect" : slicing(account)}
+                  </button>
               </div>
             </div>
           </div>
@@ -194,5 +253,40 @@ export default function Project() {
         </div>
       </div>  
     </div>
+    {modal && (
+              <div>
+                <div onClick={() => toggleModal()} className="overlay-popup">
+                </div>
+                <div className="modal-content wallet-select">
+                    <label
+                      for="category"
+                      style={{
+                        backgroundColor: '#161C24',
+                        color: '#ffffff',
+                        fontSize: '17px',
+                      }}
+                      className="form-label fw-bold py-3 text-center position-relative"
+                    >
+                      Select Wallet
+                    </label>
+                    <div className="wallte-menu">
+                      <button
+                        className="metamask-btn"
+                        onClick={() => ConnectMetaMask()}
+                      >
+                        <img src={Metamask} width={32} alt="" /> MetaMask
+                      </button>
+                      <button
+                        className="metamask-btn"
+                        onClick={() => ConnectWallet()}
+                      >
+                        <img src={WalletConnect} alt="" width={32} />{' '}
+                        WalletConnect
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            )}
+  </>
   );
 }
