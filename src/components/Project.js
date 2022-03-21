@@ -1,21 +1,47 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import logoBg from "../Images/anim-icon.png";
 import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
 import Navlaunch from "./Navlaunch";
-// import { Link } from 'react-router-dom'
 import vidProject from '../Images/projectbg.mp4'
 import ProjectDetails from "./ProjectDetails";
 import Schedule from "./Schedule";
-// import { Button } from "bootstrap";
 import Allocation from "./Allocation";
+import Client from "../Client";
+import { useParams } from "react-router-dom";
 
 export default function Project() {
 
+  // STATE for ACTIVE TABS
     const [activeTab, setActiveTab] = useState(1)
-    
     const toggleActive = (num) => {
         setActiveTab(num)
     }
+
+  const [singleDev, setSingleDev] = useState([]);
+  const { slug } = useParams();
+
+  useEffect(() => {
+    Client
+      .fetch(
+        `*[slug.current == "${slug}"] {
+          name,
+          tracker,
+          summary,
+          website,
+          rate,
+          chain,
+          slug,
+          isOpen,
+          access,
+          mcap,
+          telegram,
+          twitter,
+          schc
+      }`
+      )
+      .then((data) => setSingleDev(data[0]))
+      .catch(console.error);
+  }, [slug]);
 
   return (
     <div id="project-cont">
