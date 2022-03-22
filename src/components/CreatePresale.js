@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import React, { useState, useEffect } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
+import {SelectWallet} from './../components/Web/web3'
+import Metamask from "./../Images/metamask.png";
+import WalletConnect from "./../Images/walletconnect.png";
+import {getAccount, loginProcess} from './../components/Web/web3_methods'
 
 export default function CreatePresale() {
   const [showCreateSale, setShowCreateSale] = useState(false);
+  const [acount, setAccount] = useState();
+  const [modal, setModal] = useState(false);
   const [tokenAddress, setTokenAddress] = useState();
   const [swapRate, setSwapRate] = useState();
   const [lauchRate, setLaunchRate] = useState();
@@ -13,6 +20,12 @@ export default function CreatePresale() {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [fundLP, setFundLP] = useState();
+
+  useEffect(()=>{
+    if(window.account){
+      setAccount(window.account)
+    }
+  },[])
 
   const ShowCreateSale = () => {
     if (!showCreateSale) {
@@ -29,6 +42,7 @@ export default function CreatePresale() {
       return false;
     }
   };
+  console.log(acount)
   const CreateSale = async () => {
     if (
       IsUndefined(tokenAddress) ||
@@ -60,8 +74,38 @@ export default function CreatePresale() {
     }
   };
 
-  const SubmitCreate =()=>{
+  const SubmitCreate =()=> {
     
+  }
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+
+  const ConnectMetaMask =async()=> {
+    window.WC = false
+    window.MM = true
+    await SelectWallet();
+    await loginProcess();
+    const acount = await getAccount();
+    setAccount(acount);
+    window.account = acount
+    toggleModal()
+  
+  }
+  
+  const ConnectWallet =async()=>{
+    window.WC = true
+    window.MM = false
+    await SelectWallet();
+    const acount = await getAccount();
+    setAccount(acount);
+    window.account = acount
+    toggleModal()
   }
 
   
@@ -299,7 +343,7 @@ export default function CreatePresale() {
                   onChange={(e) => setFundLP(e.target.value)}
                 />
               </div>
-              <button
+              {<button
                 className="submit-presale"
                 style={{
                   background: "white",
@@ -311,7 +355,7 @@ export default function CreatePresale() {
                 onClick={CreateSale}
               >
                 Submit
-              </button>
+              </button>}
             </div>
           </div>
         ) : (
@@ -385,6 +429,40 @@ export default function CreatePresale() {
           </div>
         </div>
       </section>
+      {modal && (
+              <div>
+                <div onClick={() => toggleModal()} className="overlay-popup">
+                </div>
+                <div className="modal-content wallet-select">
+                    <label
+                      for="category"
+                      style={{
+                        backgroundColor: '#161C24',
+                        color: '#ffffff',
+                        fontSize: '17px',
+                      }}
+                      className="form-label fw-bold py-3 text-center position-relative"
+                    >
+                      Select Wallet
+                    </label>
+                    <div className="wallte-menu">
+                      <button
+                        className="metamask-btn"
+                        onClick={() => ConnectMetaMask()}
+                      >
+                        <img src={Metamask} width={32} alt="" /> MetaMask
+                      </button>
+                      <button
+                        className="metamask-btn"
+                        onClick={() => ConnectWallet()}
+                      >
+                        <img src={WalletConnect} alt="" width={32} />{' '}
+                        WalletConnect
+                      </button>
+                    </div>
+                  </div>
+              </div>
+            )}
     </>
   );
 }

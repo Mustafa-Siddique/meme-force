@@ -130,7 +130,7 @@ export default function Project() {
                     }}
                     onClick={()=>toggleModal()}
                   >
-                    {!account ? "Connect" : slicing(account)}
+                    {!window.account ? "Connect" : slicing(window.account)}
                   </button>
               </div>
             </div>

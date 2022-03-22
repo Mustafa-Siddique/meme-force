@@ -8,9 +8,7 @@
   padding: 0;
   color: #fff;
 }
-body.active-modal {
-  overflow-y: hidden;
-}
+
 
 /* LOADER */
 .load-container {
