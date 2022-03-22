@@ -7,6 +7,7 @@ import Client from "../Client";
 
 export default function ProjectsOpen() {
   /* COUNTDOWN */
+
   const countdownDate = "2022-02-28 17:00";
   const [
     {
@@ -27,8 +28,9 @@ export default function ProjectsOpen() {
     };
   }, [expired]);
 
+  // Fetched Raised
+  //Style 
   /* Array to be fetched */
-
   const [projectInfo, setProjectCards] = useState([]);
   useEffect(() => {
     Client.fetch(
@@ -39,7 +41,9 @@ export default function ProjectsOpen() {
           website,
           rate,
           chain,
+          slug,
           isOpen,
+          image,
           access,
           mcap,
           telegram,
@@ -51,20 +55,27 @@ export default function ProjectsOpen() {
       .catch(console.error);
   }, []);
 
+  // console.log(projectInfo.findIndex(object=>{return object.name === "Project B"}))
+
+  // let imgRef = (ref) =>{
+  //   let preSlice = ref.slice(6,-4);
+  //   let extSlice = ref.includes("-png") === true ? ".png" : ref.includes("-jpg") === true ? ".jpg" : ".svg";
+  //   let imgURI = "https://cdn.sanity.io/images/gz1p1grm/production/"+preSlice+extSlice
+  // }
   const renderOwner = (projectInfo, index) => {
     return (
       <div className="col-md-3 rounded px-3 py-3 mx-2 my-3" key={index}>
         <div className="card-head">
           <div className="logo me-3">
             <img src={logoBg} alt="" id="brand-bg" />
+            {/* {imgRef(projectInfo.image.asset._ref)} */}
             <img src={projectInfo.logo} id="brand" alt="" />
-            {/* {console.log(projectInfo.image)} */}
           </div>
           <div className="head-content">
             <h3>
               <Link
                 className="text-light text-decoration-none"
-                to="/launchpad/project"
+                to={`/launchpad/${projectInfo.slug.current}`}
               >
                 {projectInfo.name}
               </Link>
@@ -134,7 +145,7 @@ export default function ProjectsOpen() {
             </div>
             <div className="justify-content-between d-flex">
               <span>Funds Raised:</span>
-              <span> 245 BNB</span>
+              <span> 75%</span>
             </div>
           </div>
         </div>

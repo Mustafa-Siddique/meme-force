@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import logoBg from "../Images/anim-icon.png";
 import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
 import Navlaunch from "./Navlaunch";
-// import { Link } from 'react-router-dom'
 import vidProject from '../Images/projectbg.mp4'
 import ProjectDetails from "./ProjectDetails";
 import Schedule from "./Schedule";
@@ -10,11 +9,14 @@ import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import {getAccount, loginProcess} from './../components/Web/web3_methods'
 import {SelectWallet} from './../components/Web/web3'
-// import { Button } from "bootstrap";
+import { Button } from "bootstrap";
 import Allocation from "./Allocation";
+import Client from "../Client";
+import { useParams } from "react-router-dom";
 
 export default function Project() {
 
+  // STATE for ACTIVE TABS
     const [activeTab, setActiveTab] = useState(1)
     const [modal, setModal] = useState(false);
     const [account, setAccount] = useState(undefined);
