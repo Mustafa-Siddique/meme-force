@@ -39,6 +39,13 @@ export const getContract2 = async(abi, address) => {
     return customeContract;
 }
 
-export const disconnectWallet = () => {
-    window.location.replace('/');
+export const WebUtils = (amounts) => {
+    try{
+    const unit = getWeb3();
+    const amount = unit.utils.toWei(amounts.toString(), 'ether');
+    return amount
+    }
+    catch(e){
+        console.log(e)
+    }
 }

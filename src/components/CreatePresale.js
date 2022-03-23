@@ -4,11 +4,12 @@ import { AiFillCaretDown } from "react-icons/ai";
 import {SelectWallet} from './../components/Web/web3'
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
-import {getAccount, loginProcess} from './../components/Web/web3_methods'
+import {getAccount, loginProcess, WebUtils} from './../components/Web/web3_methods'
+import {createpresale} from './Web/FactoryMethods'
 
 export default function CreatePresale() {
   const [showCreateSale, setShowCreateSale] = useState(false);
-  const [acount, setAccount] = useState();
+  const [account, setAccount] = useState();
   const [modal, setModal] = useState(false);
   const [tokenAddress, setTokenAddress] = useState();
   const [swapRate, setSwapRate] = useState();
@@ -42,7 +43,9 @@ export default function CreatePresale() {
       return false;
     }
   };
-  console.log(acount)
+  
+
+
   const CreateSale = async () => {
     if (
       IsUndefined(tokenAddress) ||
@@ -70,13 +73,26 @@ export default function CreatePresale() {
           !endTime &&
           !fundLP
       );
-      // console.log(CreateSale)
     }
   };
 
-  const SubmitCreate =()=> {
-    
+  const SubmitCreate = async()=> {
+      // const start = Math.floor(new Date(startTime + " UTC").getTime() / 1000)
+      const starttime = (new Date(startTime).getTime() / 1000).toFixed(0)
+      const end = (new Date(endTime).getTime() / 1000).toFixed(0)
+      console.log(starttime,end)
+      const min = WebUtils(minBuy);
+      const max = WebUtils(maxBuy);
+      const soft = WebUtils(softCap);
+      const hard = WebUtils(hardCap)
+      const acounts = await getAccount()
+      const data =  await createpresale(tokenAddress,swapRate,min,max,soft,hard,starttime,end,fundLP);
+      if(data.status){
+        
+      }
   }
+
+
   const toggleModal = () => {
     setModal(!modal);
   };
@@ -196,7 +212,7 @@ export default function CreatePresale() {
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Launch Rate{" "}
+                  Amount{" "}
                   <span className="required" style={{ color: "red" }}>
                     {"  "}*
                   </span>
@@ -297,7 +313,7 @@ export default function CreatePresale() {
                   </span>
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   className="form-control"
                   id="exampleFormControlInput1"
                   placeholder="StartTime"
@@ -316,7 +332,7 @@ export default function CreatePresale() {
                   </span>
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   className="form-control"
                   id="exampleFormControlInput1"
                   placeholder="EndTime"
@@ -352,7 +368,7 @@ export default function CreatePresale() {
                   marginTop: "20px",
                   height: "40px",
                 }}
-                onClick={CreateSale}
+                onClick={()=>SubmitCreate()}
               >
                 Submit
               </button>}

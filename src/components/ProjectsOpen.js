@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import logoBg from "../Images/anim-icon.png";
-import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
+import { FaTelegramPlane, FaTwitter, FaGlobe, } from "react-icons/fa";
 import Countdown from "./Countdown";
 import { Link } from "react-router-dom";
 import Client from "../Client";
+import { NumberOFPresale,GetSaleAddresses } from './Web/FactoryMethods'
 
 export default function ProjectsOpen() {
   /* COUNTDOWN */
 
   const countdownDate = "2022-02-28 17:00";
+  
   const [
     {
       expired,
@@ -28,9 +30,20 @@ export default function ProjectsOpen() {
     };
   }, [expired]);
 
-  // Fetched Raised
-  //Style 
-  /* Array to be fetched */
+  useEffect(async() => {
+   try{
+    const numberofpresale = await NumberOFPresale();
+    for(let i = numberofpresale; i > 0; i--){
+      const address = await GetSaleAddresses(i-1);
+      
+    }
+   }
+   catch(e){
+     console.log(e)
+   }
+  }, []);
+
+  
   const [projectInfo, setProjectCards] = useState([]);
   useEffect(() => {
     Client.fetch(
@@ -55,13 +68,7 @@ export default function ProjectsOpen() {
       .catch(console.error);
   }, []);
 
-  // console.log(projectInfo.findIndex(object=>{return object.name === "Project B"}))
-
-  // let imgRef = (ref) =>{
-  //   let preSlice = ref.slice(6,-4);
-  //   let extSlice = ref.includes("-png") === true ? ".png" : ref.includes("-jpg") === true ? ".jpg" : ".svg";
-  //   let imgURI = "https://cdn.sanity.io/images/gz1p1grm/production/"+preSlice+extSlice
-  // }
+  
   const renderOwner = (projectInfo, index) => {
     return (
       <div className="col-md-3 rounded px-3 py-3 mx-2 my-3" key={index}>
