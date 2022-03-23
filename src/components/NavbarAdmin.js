@@ -120,6 +120,7 @@ export default function NavbarAdmin() {
                       border: "none",
                       marginRight: "10px",
                       marginLeft: "10px",
+                      marginTop:"-20"
                     }}
                   >
                     {slicing(window.account)}
@@ -136,6 +137,7 @@ export default function NavbarAdmin() {
                     border: "none",
                     marginRight: "10px",
                     marginLeft: "10px",
+                    marginTop:"-20px"
                   }}
                 >
                   Connect

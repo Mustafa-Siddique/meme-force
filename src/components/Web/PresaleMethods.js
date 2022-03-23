@@ -8,5 +8,6 @@ export const PresaleContract =async(Address)=>{
 }
 
 export const PresaleDetails = async(address)=>{
-    const contract = await getContract(PresaleABI, address)
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.getPresaleInfo().call();
 }
