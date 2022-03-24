@@ -13,14 +13,49 @@ import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, TotalRaised} from "./Web/PresaleMethods";
 
 export default function Project() {
 
   // STATE for ACTIVE TABS
-    const [activeTab, setActiveTab] = useState(1)
+    const { token } = useParams();
+    const [activeTab, setActiveTab] = useState(1);
     const [modal, setModal] = useState(false);
     const [account, setAccount] = useState(undefined);
+    const [presaleinfo, setPresaleInfo] = useState();
+    const [canClaim, setCanClaim] = useState(true);
+    const [Own, setOwn] = useState(0);
+    const [amount, setamount] = useState()
+    const [BNB, setBNB] = useState(0)
+    const [isaccountwhitelisted, setIsaccountwhitelisted] = useState();
     
+
+    useEffect(async()=>{
+        const init =async()=>{
+          const isclaimable = await canclaim(token)
+          setCanClaim(isclaimable)
+          const PresaleData = await PresaleDetails(token)
+          setPresaleInfo(PresaleData)
+          const acountCheckingforwhitelisted = await CheckForWhiteAccount(token);
+          setIsaccountwhitelisted(acountCheckingforwhitelisted)
+          const owned = await Owed(token);
+          setOwn(owned/10**18)
+          const bal = await bnbBalance();
+          setBNB(bal)
+        }
+        const RuningFun = async()=>{
+          const bal = await bnbBalance();
+          const owned = await Owed(token);
+          const PresaleData = await PresaleDetails(token)
+          setPresaleInfo(PresaleData)
+          setOwn(owned/10**18)
+        }
+
+      await init();
+    },[])
+    console.log(token)
+
+
     const toggleActive = (num) => {
         setActiveTab(num)
     }
@@ -62,10 +97,24 @@ export default function Project() {
       return first + "...." + second
     }
     
+    const ClaimAmount =async()=>{
+      console.log(token)  
+      await claimnow(token)
+    }
+
+    const Swap = async()=>{
+      if(BNB > 0){
+        console.log("buying")
+        await BuyTokens(token,amount)
+      }
+      else{
+        //
+      }
+      
+    }
   
   return (
     <>
- 
     <div id="project-cont">
       <div className="project-bg">
           <div className="bgMask"></div>
@@ -145,7 +194,7 @@ export default function Project() {
                   >
                     <p className="m-0">
                       Your balance:{" "}
-                      <span style={{ fontWeight: "500" }}>0.0000 BNB</span>
+                      <span style={{ fontWeight: "500" }}>{BNB} BNB</span>
                     </p>
                     <button
                       style={{
@@ -157,17 +206,18 @@ export default function Project() {
                         right: "5px",
                         marginTop: "-5px",
                       }}
+                      onClick={()=>setamount(BNB)}
                     >
                       Max
                     </button>
                     <br />
-                    <input type="text" id="swapFrom" />
+                    <input type="number" id="swapFrom" value={amount} onChange={(e)=>{setamount(e.target.value)}} />
                   </div>
                   <div
                     className="position-relative mt-4 m-auto"
                     style={{ maxWidth: "255px" }}
                   >
-                    <input type="text" id="swapTo" />
+                    <input disabled type="text" id="swapTo" placeholder={amount} />
                   </div>
                   <button
                     className="btn mt-4"
@@ -178,17 +228,19 @@ export default function Project() {
                       color: "#fff",
                       width: "100%",
                     }}
+                    onClick={()=>Swap()}
                   >
                     Buy
                   </button>
                   <button
-                    className="btn mt-1 desabled text-muted"
+                    className={`btn mt-1  ${canClaim ? `` : `disabled text-muted`}`}
                     style={{
                       backgroundColor: "#660033",
                       border: "none",
                       borderRadius: "5px",
                       width: "100%",
                     }}
+                    onClick={()=>ClaimAmount()}
                   >
                     Claim
                   </button>
@@ -199,13 +251,13 @@ export default function Project() {
                   </p>
                   <p className="m-0">
                     Reserved Token: <br />
-                    <span style={{ fontWeight: "500" }}>0.0000 MEMEFORCE</span>
+                    <span style={{ fontWeight: "500" }}>{Own} MEMEFORCE</span>
                   </p>
                   <br />
                   <p className="m-0">
                     Rate: <br />
                     <span style={{ fontWeight: "500" }}>
-                      1 BNB ≈ 1,111,111 MEMEFORCE
+                      1 BNB ≈ {presaleinfo ? presaleinfo._swapRate : '00'} MEMEFORCE
                     </span>
                   </p>
                   <br />
@@ -215,7 +267,7 @@ export default function Project() {
                       <div
                         className="progress-bar progress-bar-striped"
                         role="progressbar"
-                        style={{ width: "75%" }}
+                        style={{ width: `${presaleinfo ? (presaleinfo._totalRaised/(presaleinfo._hardCap/10**18))*100 : '00'}` + "%" }}
                         aria-valuenow="75"
                         aria-valuemin="0"
                         aria-valuemax="100"
@@ -223,7 +275,7 @@ export default function Project() {
                     </div>
                     <div className="justify-content-between d-flex">
                       <p>Funds Raised:</p>
-                      <p> 245 BNB</p>
+                      <p> {presaleinfo ? (presaleinfo._totalRaised/(presaleinfo._hardCap/10**18)) : '00'} BNB</p>
                     </div>
                   </div>
                 </div>

@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/launchpad" element={<Launchpad />} />
-          <Route path="/launchpad/:slug" element={<Project />} />
+          <Route path="/launchpad/:token" element={<Project />} />
           <Route path="/launchpad/admin-panel" element={<AdminPanel />} />
           {/* <Route path="projectdetails" element={<ProjectDetails />} />
             <Route path="schedule" element={<Schedule />} />

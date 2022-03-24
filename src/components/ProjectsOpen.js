@@ -5,12 +5,14 @@ import Countdown from "./Countdown";
 import { Link } from "react-router-dom";
 import Client from "../Client";
 import { NumberOFPresale,GetSaleAddresses } from './Web/FactoryMethods'
+import {PresaleDetails} from './Web/PresaleMethods'
 
 export default function ProjectsOpen() {
   /* COUNTDOWN */
 
   const countdownDate = "2022-02-28 17:00";
-  
+  const [presaleInformation, serPresaleInformation] = useState()
+  const allPresales = []
   const [
     {
       expired,
@@ -35,7 +37,10 @@ export default function ProjectsOpen() {
     const numberofpresale = await NumberOFPresale();
     for(let i = numberofpresale; i > 0; i--){
       const address = await GetSaleAddresses(i-1);
-      
+      const presaleInfo = await PresaleDetails(address)
+      presaleInfo.presale = address
+      allPresales.push(presaleInfo)
+      serPresaleInformation(allPresales)
     }
    }
    catch(e){
@@ -43,7 +48,8 @@ export default function ProjectsOpen() {
    }
   }, []);
 
-  
+  console.log("All presales", presaleInformation)
+
   const [projectInfo, setProjectCards] = useState([]);
   useEffect(() => {
     Client.fetch(
@@ -76,29 +82,29 @@ export default function ProjectsOpen() {
           <div className="logo me-3">
             <img src={logoBg} alt="" id="brand-bg" />
             {/* {imgRef(projectInfo.image.asset._ref)} */}
-            <img src={projectInfo.logo} id="brand" alt="" />
+            <img src='http://localhost:3000/static/media/anim-icon.33aeef79c37acca88d63.png' id="brand" alt="" />
           </div>
           <div className="head-content">
             <h3>
               <Link
                 className="text-light text-decoration-none"
-                to={`/launchpad/${projectInfo.slug.current}`}
+                to={`/launchpad/${projectInfo.presale}`}
               >
-                {projectInfo.name}
+                {"Memeforce Presale"}
               </Link>
             </h3>
             <div id="social-cards">
-              <a href={`${projectInfo.website}`}>
+              <a href='#'>
                 <span>
                   <FaGlobe />
                 </span>
               </a>
-              <a href={`${projectInfo.twitter}`}>
+              <a href="#">
                 <span>
                   <FaTwitter />
                 </span>
               </a>
-              <a href={`${projectInfo.telegram}`}>
+              <a href="#">
                 <span>
                   <FaTelegramPlane />
                 </span>
@@ -106,36 +112,36 @@ export default function ProjectsOpen() {
             </div>
             <div
               className={
-                projectInfo.isOpen === true
+                projectInfo._swapStatus === true
                   ? `sale-stat`
                   : `sale-stat bg-danger`
               }
             >
-              &bull; {projectInfo.isOpen === true ? "Open" : "Close "}
+              &bull; {projectInfo._swapStatus === true ? "Open" : "Close "}
             </div>
-            <div className="chain">{projectInfo.chain}</div>
+            <div className="chain">{"BSC"}</div>
           </div>
         </div>
         <div className="card-body">
-          <p className="fs-6">{projectInfo.summary}</p>
+          <p className="fs-6">{"Checking"}</p>
           <div className="rate">
             <p>Swap rate</p>
             <span>
-              1 BNB = {projectInfo.rate} {projectInfo.tracker}
+              1 BNB = {projectInfo._swapRate} {"BETS"}
             </span>
           </div>
           <div className="tokenomics d-flex justify-content-between mt-2">
             <div className="cap">
               <p>Cap</p>
-              <span>{projectInfo.mcap}</span>
+              <span>{Number(projectInfo._maxBuy)/10**18}</span>
             </div>
             <div className="schc">
               <p>SC/HC</p>
-              <span>{projectInfo.schc}</span>
+              <span>{Number(projectInfo._softCap)/10**18}/{Number(projectInfo._hardCap)/10**18}</span>
             </div>
             <div className="access text-center">
               <p>Access</p>
-              <span>{projectInfo.access}</span>
+              <span>{projectInfo._isWhiteListEnabled ? "WhiteListed" : "Public"}</span>
             </div>
           </div>
           <div className="raised mt-3">
@@ -170,7 +176,7 @@ export default function ProjectsOpen() {
             : `${days}D ${hours}H ${minutes}M ${seconds}s`}
         </div>
       </div>
-      <div className="row">{projectInfo.map(renderOwner)}</div>
+      <div className="row">{presaleInformation && presaleInformation.map(data => {return renderOwner(data)})}</div>
     </div>
   );
 }
