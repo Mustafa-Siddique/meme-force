@@ -11,7 +11,6 @@ import { getWeb3 } from './web3';
 export const PresaleDetails = async(address)=>{
     try{
     const contract = await getContract(PresaleABI, address);
-    console.log("Presale contract", contract)
     const data = await contract.methods.getPresaleInfo().call();
     return data;
     }
@@ -92,6 +91,115 @@ export const canclaim = async(address) => {
     try{
         const contract = await getContract(PresaleABI, address);
         const result = await contract.methods.totalRaised();
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const IsPresaleFinilised = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.totalRaised();
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const PresaleStringData = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.getProjectInfo();
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const ConfigurePreslae = async(address,isWhiteListEnabled,logo,telegram,website,twitter,reddit,github,instagram) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,telegram,website,twitter,reddit,github,instagram).send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const AddToWhitelist = async(address,addressess) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.addToWhitelist(addressess).send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+  export const RemoveToWhitelist = async(address,useraddress) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.removeFromWhitelist(useraddress).send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const EditPresaleTime = async(address,starttime,endtime) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.editPresaleTiming(starttime,endtime).send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const CancelPresale = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.cancelPresale().send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const ClaimOperatorFunds = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.claimOperatorFunds().send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const finalisePresale = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.claimOperatorFunds().send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const SwitchToPublic = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const result = await contract.methods.switchToPublicPresale(true).send({from: await getAccount()});
         return result;
     }
     catch(e){

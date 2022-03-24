@@ -1,4 +1,5 @@
 import { getWeb3 } from './web3';
+import { EnvAdd } from './Addresses';
 
 
 export const loginProcess = async() => {
@@ -18,6 +19,17 @@ export const getChain = async() => {
     let web3 = getWeb3();
     const chainId = await web3.eth.getChainId();
     return chainId;
+}
+
+export const CheckChain = async() => {
+    let web3 = getWeb3();
+    const chainId = await web3.eth.getChainId();
+    if(parseInt(chainId) == EnvAdd.React_App_chain_Id){
+        return true;
+    }
+    else{
+        return false
+    }
 }
 
 

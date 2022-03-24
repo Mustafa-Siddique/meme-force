@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ProjectDetails() {
+export default function ProjectDetails({tokenName,totalSupply,symbol}) {
   return (
     <div className="row">
       <div className="col">
@@ -48,15 +48,15 @@ export default function ProjectDetails() {
           <tbody>
             <tr>
               <td>Name</td>
-              <td>Meme Force</td>
+              <td>{tokenName}</td>
             </tr>
             <tr>
               <td>Token Symbol</td>
-              <td>MEMEFORCE</td>
+              <td>{symbol}</td>
             </tr>
             <tr>
               <td>Total Supply</td>
-              <td>100,000,000,000</td>
+              <td>{totalSupply}</td>
             </tr>
           </tbody>
         </table>

@@ -14,19 +14,48 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, TotalRaised} from "./Web/PresaleMethods";
+import { TokenSupply, TokenName } from "./Web/FactoryMethods";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export default function Project() {
 
+  const notify = () => toast('Swap success!', {
+    position: "top-left",
+    autoClose: 2200,
+    theme: 'dark',
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+  const notifyError = () => toast.error('Error!', {
+      position: "top-left",
+      autoClose: 2200,
+      theme: 'dark',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+
+
   // STATE for ACTIVE TABS
-    const { token } = useParams();
+    const { token, symbol } = useParams();
     const [activeTab, setActiveTab] = useState(1);
     const [modal, setModal] = useState(false);
     const [account, setAccount] = useState(undefined);
     const [presaleinfo, setPresaleInfo] = useState();
     const [canClaim, setCanClaim] = useState(true);
     const [Own, setOwn] = useState(0);
-    const [amount, setamount] = useState()
+    const [amount, setamount] = useState(0)
     const [BNB, setBNB] = useState(0)
+    const [tokenTotalSupply, setTokenTotalSupply] = useState()
+    const [token_name, setTokenName] = useState('')
     const [isaccountwhitelisted, setIsaccountwhitelisted] = useState();
     
 
@@ -42,6 +71,10 @@ export default function Project() {
           setOwn(owned/10**18)
           const bal = await bnbBalance();
           setBNB(bal)
+          const supply = await TokenSupply(PresaleData._token);
+          setTokenTotalSupply(supply/10**18)
+          const namn = await TokenName(PresaleData._token);
+          setTokenName(namn)
         }
         const RuningFun = async()=>{
           const bal = await bnbBalance();
@@ -105,16 +138,23 @@ export default function Project() {
     const Swap = async()=>{
       if(BNB > 0){
         console.log("buying")
-        await BuyTokens(token,amount)
+        const data = await BuyTokens(token,amount)
+        if(data.status){
+          notify();
+        }
+        else{
+          notifyError();
+        }
       }
       else{
         //
       }
       
     }
-  
+
   return (
     <>
+     <ToastContainer/>
     <div id="project-cont">
       <div className="project-bg">
           <div className="bgMask"></div>
@@ -217,7 +257,7 @@ export default function Project() {
                     className="position-relative mt-4 m-auto"
                     style={{ maxWidth: "255px" }}
                   >
-                    <input disabled type="text" id="swapTo" placeholder={amount} />
+                    <input disabled type="text" id="swapTo" placeholder={presaleinfo ? (amount * presaleinfo._swapRate) : '0'} />
                   </div>
                   <button
                     className="btn mt-4"
@@ -233,7 +273,7 @@ export default function Project() {
                     Buy
                   </button>
                   <button
-                    className={`btn mt-1  ${canClaim ? `` : `disabled text-muted`}`}
+                    className={`btn mt-1 text-light ${canClaim ? `` : `disabled `}`}
                     style={{
                       backgroundColor: "#660033",
                       border: "none",
@@ -251,13 +291,13 @@ export default function Project() {
                   </p>
                   <p className="m-0">
                     Reserved Token: <br />
-                    <span style={{ fontWeight: "500" }}>{Own} MEMEFORCE</span>
+                    <span style={{ fontWeight: "500" }}>{Own} {symbol}</span>
                   </p>
                   <br />
                   <p className="m-0">
                     Rate: <br />
                     <span style={{ fontWeight: "500" }}>
-                      1 BNB ≈ {presaleinfo ? presaleinfo._swapRate : '00'} MEMEFORCE
+                      1 BNB ≈ {presaleinfo ? presaleinfo._swapRate : '00'} {symbol}
                     </span>
                   </p>
                   <br />
@@ -302,7 +342,7 @@ export default function Project() {
             </li>
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails/>: activeTab === 2 ? <Schedule/> : <Allocation/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} totalSupply={tokenTotalSupply} symbol={symbol} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token}/>}
           </div>
         </div>
       </div>  

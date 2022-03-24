@@ -6,9 +6,33 @@ import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import {getAccount, loginProcess, WebUtils} from './../components/Web/web3_methods'
 import {createpresale} from './Web/FactoryMethods'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreatePresale() {
-  const [showCreateSale, setShowCreateSale] = useState(false);
+
+  const notify = () => toast('Presale Created Successfully!', {
+    position: "top-left",
+    autoClose: 2200,
+    theme: 'dark',
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+  const notifyError = () => toast.error('Error!', {
+      position: "top-left",
+      autoClose: 2200,
+      theme: 'dark',
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+
+  const [showCreateSale, setShowCreateSale] = useState(true);
   const [account, setAccount] = useState();
   const [modal, setModal] = useState(false);
   const [tokenAddress, setTokenAddress] = useState();
@@ -77,7 +101,7 @@ export default function CreatePresale() {
   };
 
   const SubmitCreate = async()=> {
-      // const start = Math.floor(new Date(startTime + " UTC").getTime() / 1000)
+      let data
       const starttime = (new Date(startTime).getTime() / 1000).toFixed(0)
       const end = (new Date(endTime).getTime() / 1000).toFixed(0)
       console.log(starttime,end)
@@ -86,9 +110,24 @@ export default function CreatePresale() {
       const soft = WebUtils(softCap);
       const hard = WebUtils(hardCap)
       const acounts = await getAccount()
-      const data =  await createpresale(tokenAddress,swapRate,min,max,soft,hard,starttime,end,fundLP);
+      if(minBuy > maxBuy){
+        alert("Minimum buy should be less than maximum buy")
+      }
+      else if(softCap > hardCap){
+        alert("SoftCap should be less than HardCap")
+      }
+      else if(starttime > end){
+        alert("Closing Time should be less than Starting Time")
+      }
+      else{
+        data  =  await createpresale(tokenAddress,swapRate,min,max,soft,hard,starttime,end,fundLP);
+      }
+
       if(data.status){
-        
+        notify();
+      }
+      else{
+        notifyError();
       }
   }
 
@@ -127,6 +166,7 @@ export default function CreatePresale() {
   
   return (
     <>
+       <ToastContainer/>
       <section>
         <div className="presale-container">
           <div
@@ -207,7 +247,7 @@ export default function CreatePresale() {
                   onChange={(e) => setSwapRate(e.target.value)}
                 />
               </div>
-              <div className="Token-Address">
+              {/* <div className="Token-Address">
                 <label
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
@@ -225,13 +265,13 @@ export default function CreatePresale() {
                   value={lauchRate}
                   onChange={(e) => setLaunchRate(e.target.value)}
                 />
-              </div>
+              </div> */}
               <div className="Token-Address">
                 <label
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Min Buy{" "}
+                  Min Buy{" "}(in BNB)
                   <span className="required" style={{ color: "red" }}>
                     {"  "}*
                   </span>
@@ -250,7 +290,7 @@ export default function CreatePresale() {
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Max Buy{" "}
+                  Max Buy{" "}(in BNB)
                   <span className="required" style={{ color: "red" }}>
                     {"  "}*
                   </span>
@@ -269,7 +309,7 @@ export default function CreatePresale() {
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Softcap{" "}
+                  Softcap{" "}(in BNB)
                   <span className="required" style={{ color: "red" }}>
                     {"  "}*
                   </span>
@@ -288,7 +328,7 @@ export default function CreatePresale() {
                   htmlFor="exampleFormControlInput1"
                   className="form-label"
                 >
-                  Hardcap{" "}
+                  Hardcap{" "}(in BNB)
                   <span className="required" style={{ color: "red" }}>
                     {"  "}*
                   </span>

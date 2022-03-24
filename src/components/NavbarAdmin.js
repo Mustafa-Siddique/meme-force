@@ -120,7 +120,7 @@ export default function NavbarAdmin() {
                       border: "none",
                       marginRight: "10px",
                       marginLeft: "10px",
-                      marginTop:"-20"
+                      marginTop:"-20px"
                     }}
                   >
                     {slicing(window.account)}

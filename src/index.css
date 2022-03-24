@@ -23,6 +23,14 @@ code {
     padding: 5px 13px 12px 13px;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  
+  #openProject-cont .row {
+    max-width: 1024px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .navbar-toggler{
     display: none;

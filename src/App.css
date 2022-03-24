@@ -479,6 +479,7 @@
   background-size: contain;
   background-position: center;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 /* OPEN PROJECTS */
@@ -750,4 +751,45 @@
   display: grid;
   padding: 25px 0;
   grid-gap: 13px;
+}
+
+.manage-presale div{
+  margin: 5px;
+}
+
+.configure-presale{
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-radius: 9px;
+  padding: 5px;
+}
+.configure-sale input{
+  margin: 5px;
+  outline: none;
+  background-color: #191a1d;
+  color: #ffffff;
+}
+.configure-sale{
+  display: grid;
+}
+
+.dowpdown-header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-btn{
+  text-decoration: none;
+  border: none;
+  background-color: #191a1d;
+  color: #ffffff;
+}
+
+.configure-sale button{
+  margin-top: 10px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

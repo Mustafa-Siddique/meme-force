@@ -6,7 +6,7 @@ export default function Launchpad() {
   return (
     <div>
       <div className="launchpad-container">
-        <Navlaunch/>
+        {/* <Navlaunch/> */}
         <ProjectsOpen/>
       </div>
     </div>

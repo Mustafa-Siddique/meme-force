@@ -5,7 +5,7 @@ import {TokenABI} from './ABI/Token'
 const fee = 100000000000000000
 
 export const FactoryContract = async () => {
-  const constract = getContract(FactoryABI, EnvAdd.REACT_APP_FACTORY)
+  const constract = await getContract(FactoryABI, EnvAdd.REACT_APP_FACTORY)
   return constract
 }
 
@@ -24,11 +24,6 @@ export const createpresale = async (tokenAddress,swapRate,minBuy,maxBuy,softCap,
   }
 }
 
-export const TransferAmount =async(address,amount)=>{
-  const contract = getContract(TokenABI, address)
-  const data = contract.methods.transferFrom(6000000000000000000n,EnvAdd.REACT_APP_FACTORY).send({ from: await getAccount() });
-  return data
-}
 
 export const GetSaleAddresses = async(ID) =>{
   const contract = await FactoryContract();
@@ -40,4 +35,35 @@ export const NumberOFPresale =async()=>{
   const contract = await FactoryContract();
   const num = await contract.methods.presalesNumber().call();
   return num;
+}
+
+//********************** */ Token Methedos *********************//
+
+export const TransferAmountFromToken =async(address,amount)=>{
+  const contract = await getContract(TokenABI, address)
+  const data = await contract.methods.transferFrom(6000000000000000000n,EnvAdd.REACT_APP_FACTORY).send({ from: await getAccount() });
+  return data
+}
+
+export const getTokenSymbol =async(address)=>{
+  const contract = await getContract(TokenABI, address)
+  const data = await contract.methods.symbol().call();
+  return data
+}
+
+export const TokenSupply =async(address)=>{
+  const contract = await getContract(TokenABI, address)
+  const data = await contract.methods.totalSupply().call();
+  return data
+}
+
+export const TokenName =async(address)=>{
+  const contract = await getContract(TokenABI, address)
+  const data = await contract.methods.name().call();
+  return data
+}
+export const TokenDecimals =async(address)=>{
+  const contract = await getContract(TokenABI, address)
+  const data = await contract.methods.decimals().call();
+  return Number(data)
 }
