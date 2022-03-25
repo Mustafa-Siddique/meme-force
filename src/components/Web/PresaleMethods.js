@@ -32,10 +32,11 @@ export const CheckForWhiteAccount = async(address)=>{
 
 export const BuyTokens = async(address,amount)=> {
     try{
+    
     const contract = await getContract(PresaleABI, address);
     const data = await contract.methods.swap().send({
         from: await getAccount(),
-        value: amount * (10**18)
+        value: amount * (10**17)
     })
     return data;
     }
@@ -112,7 +113,7 @@ export const canclaim = async(address) => {
   export const PresaleStringData = async(address) => {
     try{
         const contract = await getContract(PresaleABI, address);
-        const result = await contract.methods.getProjectInfo();
+        const result = await contract.methods.getProjectInfo().call();
         return result;
     }
     catch(e){
@@ -124,6 +125,18 @@ export const canclaim = async(address) => {
     try{
         const contract = await getContract(PresaleABI, address);
         const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,telegram,website,twitter,reddit,github,instagram).send({from: await getAccount()});
+        return result;
+    }
+    catch(e){
+        console.log(e)
+    }
+  }
+
+  export const getOperator = async(address) => {
+    try{
+        const contract = await getContract(PresaleABI, address);
+        console.log('presale contract',contract)
+        const result = await contract.methods.operator().call();
         return result;
     }
     catch(e){

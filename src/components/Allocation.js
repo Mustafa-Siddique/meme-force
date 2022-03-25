@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { AiFillCaretDown } from "react-icons/ai";
 import { SwitchToPublic, finalisePresale, ClaimOperatorFunds, CancelPresale, EditPresaleTime, RemoveToWhitelist, AddToWhitelist, ConfigurePreslae} from './Web/PresaleMethods'
 
-export default function Allocation({PresaleContract}) {
+export default function Allocation({PresaleContract,presaleBalance,Transfer}) {
   const [showConfig, setShowConfig] = useState(false)
   const [showAddtowhitelist, setshowAddtowhitelist] = useState(false)
   const [showtiming, setshowtiming] = useState(false)
@@ -66,6 +66,12 @@ export default function Allocation({PresaleContract}) {
 
   return (
     <div className='manage-presale'>
+       {presaleBalance == 0 ?<div className='configure-presale'>
+          <div className='dowpdown-header'>
+             <h5>Transfer Fund to Presale</h5>
+             <button className='submit-btn' onClick={()=>Transfer()}>Submit</button>
+          </div>
+        </div>:''}
         <div className='configure-presale'>
           <div className='dowpdown-header'>
              <h5>Configure Presale</h5>

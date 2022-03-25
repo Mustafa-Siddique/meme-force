@@ -5,7 +5,7 @@ import Countdown from "./Countdown";
 import { Link } from "react-router-dom";
 import Client from "../Client";
 import { NumberOFPresale, GetSaleAddresses } from "./Web/FactoryMethods";
-import { PresaleDetails } from "./Web/PresaleMethods";
+import { PresaleDetails, PresaleStringData } from "./Web/PresaleMethods";
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import Navlaunch from "./Navlaunch";
@@ -54,12 +54,14 @@ export default function ProjectsOpen() {
         for (let i = numberofpresale; i > 0; i--) {
           const address = await GetSaleAddresses(i - 1);
           const presaleInfo = await PresaleDetails(address);
+          const presalestringdata = await PresaleStringData(address)
           const symbol = await getTokenSymbol(presaleInfo._token);
           presaleInfo.presale = address;
           presaleInfo.tokenSymbol = symbol
+          presaleInfo.ProjectInfo = presalestringdata
           allPresales.push(presaleInfo);
-          serPresaleInformation(allPresales);
        }
+       serPresaleInformation(allPresales);
       }
       else {
         Warning();
@@ -151,13 +153,13 @@ export default function ProjectsOpen() {
       <div className="col-md-3 rounded px-3 py-3 mx-2 my-3" key={index}>
         <div className="card-head">
           <div className="logo me-3">
-            <img src={logoBg} alt="" id="brand-bg" />
+            <img src={projectInfo.ProjectInfo.logo == '' ? logoBg : projectInfo.ProjectInfo.logo} alt="" id="brand-bg" />
             {/* {imgRef(projectInfo.image.asset._ref)} */}
-            <img
-              src="http://localhost:3000/static/media/anim-icon.33aeef79c37acca88d63.png"
+            {/* <img
+              src={projectInfo.ProjectInfo.logo == '' ? projectInfo.ProjectInfo.logo : "http://localhost:3000/static/media/anim-icon.33aeef79c37acca88d63.png"}
               id="brand"
               alt=""
-            />
+            /> */}
           </div>
           <div className="head-content">
             <h3>
@@ -169,17 +171,17 @@ export default function ProjectsOpen() {
               </Link>
             </h3>
             <div id="social-cards">
-              <a href="#">
+              <a href={projectInfo.ProjectInfo._website}>
                 <span>
                   <FaGlobe />
                 </span>
               </a>
-              <a href="#">
+              <a href={projectInfo.ProjectInfo._twitter}>
                 <span>
                   <FaTwitter />
                 </span>
               </a>
-              <a href="#">
+              <a href={projectInfo.ProjectInfo._telegram}>
                 <span>
                   <FaTelegramPlane />
                 </span>

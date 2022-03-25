@@ -7,22 +7,22 @@ import ProjectDetails from "./ProjectDetails";
 import Schedule from "./Schedule";
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
-import {getAccount, loginProcess} from './../components/Web/web3_methods'
+import {getAccount, loginProcess, WebUtils} from './../components/Web/web3_methods'
 import {SelectWallet} from './../components/Web/web3'
 import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, TotalRaised} from "./Web/PresaleMethods";
-import { TokenSupply, TokenName } from "./Web/FactoryMethods";
-import { ToastContainer, toast } from 'react-toastify';
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator} from "./Web/PresaleMethods";
+import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
+import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 
 export default function Project() {
-
-  const notify = () => toast('Swap success!', {
+  const notify = () => Tost('Swap success!', {
     position: "top-left",
     autoClose: 2200,
     theme: 'dark',
@@ -32,7 +32,7 @@ export default function Project() {
     draggable: true,
     progress: undefined,
     });
-  const notifyError = () => toast.error('Error!', {
+  const notifyError = () => Tost.error('Error!', {
       position: "top-left",
       autoClose: 2200,
       theme: 'dark',
@@ -42,7 +42,7 @@ export default function Project() {
       draggable: true,
       progress: undefined,
       });
-
+  const LowBalance =()=> toast.error("Please Send Funds to Presale Contract.")
 
   // STATE for ACTIVE TABS
     const { token, symbol } = useParams();
@@ -57,6 +57,8 @@ export default function Project() {
     const [tokenTotalSupply, setTokenTotalSupply] = useState()
     const [token_name, setTokenName] = useState('')
     const [isaccountwhitelisted, setIsaccountwhitelisted] = useState();
+    const [operator, setOperator] = useState('')
+    const [presaleBalance, setPresaleBalance] = useState(0)
     
 
     useEffect(async()=>{
@@ -65,6 +67,11 @@ export default function Project() {
           setCanClaim(isclaimable)
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
+          const balan = await BalanceOfPresaleContract(PresaleData._token,token)
+          if(balan != 0){
+            LowBalance();
+          }
+          setPresaleBalance(balan)
           const acountCheckingforwhitelisted = await CheckForWhiteAccount(token);
           setIsaccountwhitelisted(acountCheckingforwhitelisted)
           const owned = await Owed(token);
@@ -75,6 +82,11 @@ export default function Project() {
           setTokenTotalSupply(supply/10**18)
           const namn = await TokenName(PresaleData._token);
           setTokenName(namn)
+          const operat = await getOperator(token)
+
+          setOperator(operat)
+          const acount = await getAccount();
+          setAccount(acount);
         }
         const RuningFun = async()=>{
           const bal = await bnbBalance();
@@ -86,7 +98,7 @@ export default function Project() {
 
       await init();
     },[])
-    console.log(token)
+    
 
 
     const toggleActive = (num) => {
@@ -151,9 +163,22 @@ export default function Project() {
       }
       
     }
+    
+    const TransferFunds = async()=>{
+      try{
+      const amount = presaleinfo._swapRate * presaleinfo._hardCap
+      const lastamount = WebUtils(amount)
+      await TransferAmountFromToken(presaleinfo._token,account,token,lastamount)
+      }
+      catch(e){
+        console.log(e)
+      }
+    }
 
+console.log("prisale balance",presaleBalance)
   return (
     <>
+    <Toaster />
      <ToastContainer/>
     <div id="project-cont">
       <div className="project-bg">
@@ -287,7 +312,7 @@ export default function Project() {
                 </div>
                 <div className="col">
                   <p>
-                    Remaning allocation: <span>0.0000</span>
+                    Remaning allocation: <span>{presaleinfo ? (presaleinfo._hardCap - presaleinfo._totalRaised)/10**18 : '00'}</span>
                   </p>
                   <p className="m-0">
                     Reserved Token: <br />
@@ -335,14 +360,14 @@ export default function Project() {
                 Schedule
               </button>
             </li>
-            <li className="nav-item">
+           {operator == account ? <li className="nav-item">
               <button className={activeTab === 3? "nav-link active":"nav-link"} onClick={()=> toggleActive(3)}>
                 Your Allocation
               </button>
-            </li>
+            </li> : ''}
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails tokenName={token_name} totalSupply={tokenTotalSupply} symbol={symbol} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token}/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance}/>}
           </div>
         </div>
       </div>  

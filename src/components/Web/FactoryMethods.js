@@ -39,9 +39,9 @@ export const NumberOFPresale =async()=>{
 
 //********************** */ Token Methedos *********************//
 
-export const TransferAmountFromToken =async(address,amount)=>{
+export const TransferAmountFromToken = async(address,sender,recevier,amount)=>{
   const contract = await getContract(TokenABI, address)
-  const data = await contract.methods.transferFrom(6000000000000000000n,EnvAdd.REACT_APP_FACTORY).send({ from: await getAccount() });
+  const data = await contract.methods.transfer(recevier,amount).send({ from: await getAccount() });
   return data
 }
 
@@ -66,4 +66,9 @@ export const TokenDecimals =async(address)=>{
   const contract = await getContract(TokenABI, address)
   const data = await contract.methods.decimals().call();
   return Number(data)
+}
+export const BalanceOfPresaleContract =async(address,presaleaddress)=>{
+  const contract = await getContract(TokenABI, address)
+  const balance = await contract.methods.balanceOf(presaleaddress).call();
+  return balance
 }

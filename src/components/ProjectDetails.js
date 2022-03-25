@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ProjectDetails({tokenName,totalSupply,symbol}) {
+export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo}) {
   return (
     <div className="row">
       <div className="col">
@@ -15,24 +15,27 @@ export default function ProjectDetails({tokenName,totalSupply,symbol}) {
           <tbody>
             <tr>
               <td>Swap Rate</td>
-              <td>@mdo</td>
+              <td>{presaleinfo ? presaleinfo._swapRate : '0'}</td>
             </tr>
             <tr>
-              <td>Cap</td>
-              <td>@fat</td>
+              <td>Maximum Buy</td>
+              <td>{presaleinfo ? (presaleinfo._maxBuy)/10**18 : '0'}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>Total Users Participated</td>
               <td>@twitter</td>
-            </tr>
+            </tr> */}
             <tr>
-              <td>Total Funds Swapped</td>
-              <td>@mdo</td>
+              <td>Total Funds Raised</td>
+              <td>{presaleinfo ? presaleinfo._totalRaised : '0'}</td>
             </tr>
-            <tr>
+            {presaleinfo ?  <tr>
               <td>Access Type</td>
-              <td>@mdo</td>
-            </tr>
+              <td>{presaleinfo._isWhiteListEnabled ? "WhiteListed Presale" : 'Public Presale'}</td>
+            </tr> : <tr>
+              <td>Access Type</td>
+              <td> </td>
+            </tr>}
           </tbody>
         </table>
       </div>
