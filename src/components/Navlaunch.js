@@ -34,9 +34,23 @@ export default function Navlaunch() {
                 border: "none",
                 padding: "7px",
                 background: "#201F21",
+                
               }}
             >
               Create Presale
+            </NavLink>
+            <NavLink
+              to="/launchpad"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                border: "none",
+                padding: "7px",
+                background: "#201F21",
+                marginLeft:'10px'
+              }}
+            >
+              Launchpad
             </NavLink>
           </div>
           <div className="mob-rate">

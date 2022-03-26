@@ -41,6 +41,7 @@ export const getAccount = async () => {
 
 export const getContract = async(abi, address) => {
     let web3 = getWeb3();
+    console.log(web3)
     const customeContract = new web3.eth.Contract(abi, address);
     return customeContract;
 }
@@ -55,6 +56,28 @@ export const WebUtils = (amounts) => {
     try{
     const unit = getWeb3();
     const amount = unit.utils.toWei(amounts.toString(), 'ether');
+    return amount
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const toBNB = (amounts) => {
+    try{
+    const unit = getWeb3();
+    const amount = unit.utils.toBN(amounts.toString(), 'ether');
+    return amount
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const getFasFee = () => {
+    try{
+    const unit = getWeb3();
+    const amount = unit.eth.getGasPrice();
     return amount
     }
     catch(e){

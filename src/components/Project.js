@@ -7,12 +7,13 @@ import ProjectDetails from "./ProjectDetails";
 import Schedule from "./Schedule";
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
-import {getAccount, loginProcess, WebUtils} from './../components/Web/web3_methods'
-import {SelectWallet} from './../components/Web/web3'
+import {getAccount, loginProcess, WebUtils,getFasFee,toBNB} from './../components/Web/web3_methods'
+import {SelectWallet, } from './../components/Web/web3'
 import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
+import {TokenDecimals} from './Web/FactoryMethods'
 import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator,amountclaimed } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
@@ -59,14 +60,18 @@ export default function Project() {
     const [isaccountwhitelisted, setIsaccountwhitelisted] = useState();
     const [operator, setOperator] = useState('')
     const [presaleBalance, setPresaleBalance] = useState(0)
+    const [deciaml, setDecimal] = useState(0)
     
 
     useEffect(async()=>{
         const init =async()=>{
+         
           const isclaimable = await canclaim(token)
           setCanClaim(isclaimable)
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
+          const decimal = await TokenDecimals(PresaleData._token)
+          setDecimal(Number(decimal))
           const balan = await BalanceOfPresaleContract(PresaleData._token,token)
           if(Number(balan) == 0){
             LowBalance();
@@ -76,11 +81,11 @@ export default function Project() {
           setIsaccountwhitelisted(acountCheckingforwhitelisted)
           const owned = await Owed(token);
           const claimedAmount = await amountclaimed(token)
-          setOwn((owned/10**18)-(claimedAmount/10**18))
+          setOwn((owned/10**decimal)-(claimedAmount/10**decimal))
           const bal = await bnbBalance();
           setBNB(bal)
           const supply = await TokenSupply(PresaleData._token);
-          setTokenTotalSupply(supply/10**18)
+          setTokenTotalSupply(supply/10**decimal)
           const namn = await TokenName(PresaleData._token);
           setTokenName(namn)
           const operat = await getOperator(token)
@@ -89,16 +94,10 @@ export default function Project() {
           const acount = await getAccount();
           setAccount(acount);
         }
-        const RuningFun = async()=>{
-          const bal = await bnbBalance();
-          const owned = await Owed(token);
-          const PresaleData = await PresaleDetails(token)
-          setPresaleInfo(PresaleData)
-          setOwn(owned/10**18)
-        }
+        
 
       await init();
-    },[])
+    },[account])
     
 
 
@@ -125,6 +124,18 @@ export default function Project() {
       window.account = account
       toggleModal()
     
+    }
+
+    const RuningFun = async()=>{
+      const bal = await bnbBalance();
+      setBNB(bal)
+      
+      const owned = await Owed(token);
+      const claimedAmount = await amountclaimed(token)
+      setOwn((owned/10**deciaml)-(claimedAmount/10**deciaml))
+      
+      const PresaleData = await PresaleDetails(token)
+      setPresaleInfo(PresaleData)
     }
     
     const ConnectWallet =async()=>{
@@ -154,6 +165,7 @@ export default function Project() {
         const data = await BuyTokens(token,amount)
         if(data.status){
           notify();
+          await RuningFun();
         }
         else{
           notifyError();
@@ -169,6 +181,7 @@ export default function Project() {
       try{
       const amount = presaleinfo._swapRate * presaleinfo._hardCap/10**18
       const lastamount = WebUtils(Number(amount))
+      console.log(lastamount)
       await TransferAmountFromToken(presaleinfo._token,account,token,lastamount)
       }
       catch(e){
@@ -226,7 +239,11 @@ console.log("prisale balance",presaleBalance,Own)
                     </a>
                   </div>
                 </div>
-                <div className="sale-stat">&bull; Open</div>
+               {presaleinfo ? <div className={
+                presaleinfo._swapStatus === true
+                  ? `sale-stat`
+                  : `sale-stat bg-danger`
+              }>&bull; {presaleinfo._swapStatus === true ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
                 <div className="chain">BNB</div>
                 <p className="fs-6" style={{ color: "#6c757d" }}>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -245,7 +262,7 @@ console.log("prisale balance",presaleBalance,Own)
                     }}
                     onClick={()=>toggleModal()}
                   >
-                    {!window.account ? "Connect" : slicing(window.account)}
+                    {!account ? "Connect" : slicing(account)}
                   </button>
               </div>
             </div>
@@ -272,7 +289,7 @@ console.log("prisale balance",presaleBalance,Own)
                         right: "5px",
                         marginTop: "-5px",
                       }}
-                      onClick={()=>setamount(BNB)}
+                      onClick={()=>setamount(BNB-0.001)}
                     >
                       Max
                     </button>
@@ -313,7 +330,7 @@ console.log("prisale balance",presaleBalance,Own)
                 </div>
                 <div className="col">
                   <p>
-                    Remaning allocation: <span>{presaleinfo ? (presaleinfo._hardCap - presaleinfo._totalRaised)/10**18 : '00'}</span>
+                    Remaining allocation: <span>{presaleinfo ? (presaleinfo._hardCap - presaleinfo._totalRaised)/10**18 : '00'} BNBs</span>
                   </p>
                   <p className="m-0">
                     Reserved Token: <br />
@@ -333,7 +350,7 @@ console.log("prisale balance",presaleBalance,Own)
                       <div
                         className="progress-bar progress-bar-striped"
                         role="progressbar"
-                        style={{ width: `${presaleinfo ? ((presaleinfo._totalRaised/10**18)/(presaleinfo._hardCap/10**18))*100 : '00'}` + "%" }}
+                        style={{ width: `${presaleinfo ? ((presaleinfo._totalRaised/10**deciaml)/(presaleinfo._hardCap/10**deciaml))*100 : '00'}` + "%" }}
                         aria-valuenow="75"
                         aria-valuemin="0"
                         aria-valuemax="100"
@@ -368,7 +385,7 @@ console.log("prisale balance",presaleBalance,Own)
             </li> : ''}
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails tokenName={token_name} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance}/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance}/>}
           </div>
         </div>
       </div>  

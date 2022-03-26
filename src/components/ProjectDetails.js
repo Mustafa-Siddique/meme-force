@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo}) {
+export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo,presaleaddress,decimal}) {
+
+  const slicing = (address) => {
+    const first = address.slice(0,10);
+    const second = address.slice(32);
+    return first + "...." + second
+  }
   return (
     <div className="row">
       <div className="col">
@@ -14,12 +20,12 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
           </thead>
           <tbody>
             <tr>
-              <td>Swap Rate</td>
-              <td>{presaleinfo ? presaleinfo._swapRate : '0'}</td>
+              <td>Presale Address</td>
+            <a href={`https://testnet.bscscan.com/address/${presaleaddress}`} style={{color:'#ffffff'}}><td>{slicing(presaleaddress)}</td></a>
             </tr>
             <tr>
               <td>Maximum Buy</td>
-              <td>{presaleinfo ? (presaleinfo._maxBuy)/10**18 : '0'}</td>
+              <td>{presaleinfo ? (presaleinfo._maxBuy)/10**18 : '0'} BNB</td>
             </tr>
             {/* <tr>
               <td>Total Users Participated</td>
@@ -27,7 +33,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
             </tr> */}
             <tr>
               <td>Total Funds Raised</td>
-              <td>{presaleinfo ? presaleinfo._totalRaised/10**18 : '0'}</td>
+              <td>{presaleinfo ? presaleinfo._totalRaised/10**18 : '0'} BNB</td>
             </tr>
             {presaleinfo ?  <tr>
               <td>Access Type</td>
@@ -60,6 +66,10 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
             <tr>
               <td>Total Supply</td>
               <td>{totalSupply}</td>
+            </tr>
+            <tr>
+              <td>Decimal</td>
+              <td>{decimal}</td>
             </tr>
           </tbody>
         </table>

@@ -11,7 +11,7 @@ import WalletConnect from "./../Images/walletconnect.png";
 import Navlaunch from "./Navlaunch";
 import { getAccount, loginProcess, CheckChain } from "./../components/Web/web3_methods";
 import { SelectWallet, DisconnectWallet } from "./../components/Web/web3";
-import {getTokenSymbol} from './Web/FactoryMethods'
+import {getTokenSymbol,TokenName} from './Web/FactoryMethods'
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo.png";
 import fav from "../Images/logo192.png";
@@ -56,9 +56,11 @@ export default function ProjectsOpen() {
           const presaleInfo = await PresaleDetails(address);
           const presalestringdata = await PresaleStringData(address)
           const symbol = await getTokenSymbol(presaleInfo._token);
+          const name = await TokenName(presaleInfo._token)
           presaleInfo.presale = address;
           presaleInfo.tokenSymbol = symbol
           presaleInfo.ProjectInfo = presalestringdata
+          presaleInfo.tokenname =  name
           allPresales.push(presaleInfo);
        }
        serPresaleInformation(allPresales);
@@ -173,7 +175,7 @@ export default function ProjectsOpen() {
                 className="text-light text-decoration-none"
                 to={`/launchpad/${projectInfo.presale}/${projectInfo.tokenSymbol}`}
               >
-                {"Memeforce Presale"}
+                {projectInfo.tokenname}
               </Link>
             </h3>
             <div id="social-cards">
