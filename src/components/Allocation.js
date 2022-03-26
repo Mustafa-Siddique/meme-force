@@ -70,7 +70,7 @@ export default function Allocation({PresaleContract,presaleBalance,Transfer}) {
 
   return (
     <div className='manage-presale'>
-       {presaleBalance != 0 ?<div className='configure-presale'>
+       {presaleBalance == 0 ? <div className='configure-presale'>
           <div className='dowpdown-header'>
              <h5>Transfer Fund to Presale</h5>
              <button className='submit-btn' onClick={()=>Transfer()}>Submit</button>
