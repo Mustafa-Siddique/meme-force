@@ -27,7 +27,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
             </tr> */}
             <tr>
               <td>Total Funds Raised</td>
-              <td>{presaleinfo ? presaleinfo._totalRaised : '0'}</td>
+              <td>{presaleinfo ? presaleinfo._totalRaised/10**18 : '0'}</td>
             </tr>
             {presaleinfo ?  <tr>
               <td>Access Type</td>

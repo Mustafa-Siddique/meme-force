@@ -13,7 +13,7 @@ import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator} from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator,amountclaimed } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -68,14 +68,15 @@ export default function Project() {
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
           const balan = await BalanceOfPresaleContract(PresaleData._token,token)
-          if(balan != 0){
+          if(Number(balan) == 0){
             LowBalance();
           }
           setPresaleBalance(balan)
           const acountCheckingforwhitelisted = await CheckForWhiteAccount(token);
           setIsaccountwhitelisted(acountCheckingforwhitelisted)
           const owned = await Owed(token);
-          setOwn(owned/10**18)
+          const claimedAmount = await amountclaimed(token)
+          setOwn((owned/10**18)-(claimedAmount/10**18))
           const bal = await bnbBalance();
           setBNB(bal)
           const supply = await TokenSupply(PresaleData._token);
@@ -166,8 +167,8 @@ export default function Project() {
     
     const TransferFunds = async()=>{
       try{
-      const amount = presaleinfo._swapRate * presaleinfo._hardCap
-      const lastamount = WebUtils(amount)
+      const amount = presaleinfo._swapRate * presaleinfo._hardCap/10**18
+      const lastamount = WebUtils(Number(amount))
       await TransferAmountFromToken(presaleinfo._token,account,token,lastamount)
       }
       catch(e){
@@ -175,7 +176,7 @@ export default function Project() {
       }
     }
 
-console.log("prisale balance",presaleBalance)
+console.log("prisale balance",presaleBalance,Own)
   return (
     <>
     <Toaster />
@@ -332,15 +333,15 @@ console.log("prisale balance",presaleBalance)
                       <div
                         className="progress-bar progress-bar-striped"
                         role="progressbar"
-                        style={{ width: `${presaleinfo ? (presaleinfo._totalRaised/(presaleinfo._hardCap/10**18))*100 : '00'}` + "%" }}
+                        style={{ width: `${presaleinfo ? ((presaleinfo._totalRaised/10**18)/(presaleinfo._hardCap/10**18))*100 : '00'}` + "%" }}
                         aria-valuenow="75"
                         aria-valuemin="0"
                         aria-valuemax="100"
                       ></div>
                     </div>
-                    <div className="justify-content-between d-flex">
-                      <p>Funds Raised:</p>
-                      <p> {presaleinfo ? (presaleinfo._totalRaised/(presaleinfo._hardCap/10**18)) : '00'} BNB</p>
+                    <div className="justify-content-between d-flex text-white">
+                      <p className="text-white">Funds Raised:</p>
+                      <p className="text-white"> {presaleinfo ? ((presaleinfo._totalRaised/10**18)).toFixed(2) : '00'} BNB</p>
                     </div>
                   </div>
                 </div>
@@ -355,14 +356,14 @@ console.log("prisale balance",presaleBalance)
                 Project Details
               </button>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <button className={activeTab === 2? "nav-link active":"nav-link"} onClick={()=> toggleActive(2)}>
                 Schedule
               </button>
-            </li>
+            </li> */}
            {operator == account ? <li className="nav-item">
               <button className={activeTab === 3? "nav-link active":"nav-link"} onClick={()=> toggleActive(3)}>
-                Your Allocation
+                Manage Presale
               </button>
             </li> : ''}
           </ul>

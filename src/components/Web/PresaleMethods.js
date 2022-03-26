@@ -36,7 +36,7 @@ export const BuyTokens = async(address,amount)=> {
     const contract = await getContract(PresaleABI, address);
     const data = await contract.methods.swap().send({
         from: await getAccount(),
-        value: amount * (10**17)
+        value: amount * (10**18)
     })
     return data;
     }
@@ -49,6 +49,16 @@ export const Owed = async(address)=> {
     try{
     const contract = await getContract(PresaleABI, address);
     const data = await contract.methods.owed(await getAccount()).call();
+    return data
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+export const amountclaimed = async(address)=> {
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.claimed(await getAccount()).call();
     return data
     }
     catch(e){
@@ -201,7 +211,7 @@ export const canclaim = async(address) => {
   export const finalisePresale = async(address) => {
     try{
         const contract = await getContract(PresaleABI, address);
-        const result = await contract.methods.claimOperatorFunds().send({from: await getAccount()});
+        const result = await contract.methods.finalize(true).send({from: await getAccount()});
         return result;
     }
     catch(e){

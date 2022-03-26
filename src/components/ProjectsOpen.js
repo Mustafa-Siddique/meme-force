@@ -10,7 +10,7 @@ import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import Navlaunch from "./Navlaunch";
 import { getAccount, loginProcess, CheckChain } from "./../components/Web/web3_methods";
-import { SelectWallet } from "./../components/Web/web3";
+import { SelectWallet, DisconnectWallet } from "./../components/Web/web3";
 import {getTokenSymbol} from './Web/FactoryMethods'
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo.png";
@@ -142,6 +142,12 @@ export default function ProjectsOpen() {
     toggleModal();
   };
 
+  const disconnectwallet = async()=>{
+    await DisconnectWallet();
+    setAccount(undefined);
+    window.account = false;
+  }
+
   const slicing = (address) => {
     const first = address.slice(0, 5);
     const second = address.slice(36);
@@ -232,7 +238,7 @@ export default function ProjectsOpen() {
               <div
                 className="progress-bar progress-bar-striped"
                 role="progressbar"
-                style={{ width: `${(projectInfo._totalRaised/(projectInfo._hardCap/10**18))*100 }` + "%" }}
+                style={{ width: `${((projectInfo._totalRaised/10**18)/(projectInfo._hardCap/10**18))*100 }` + "%" }}
                 aria-valuenow="75"
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -240,7 +246,7 @@ export default function ProjectsOpen() {
             </div>
             <div className="justify-content-between d-flex">
               <span>Funds Raised:</span>
-              <span> {(projectInfo._totalRaised/(projectInfo._hardCap/10**18))*100 }%</span>
+              <span> {(((projectInfo._totalRaised/10**18)/(projectInfo._hardCap/10**18))*100).toFixed(2) }%</span>
             </div>
           </div>
         </div>
@@ -288,6 +294,7 @@ export default function ProjectsOpen() {
                     marginLeft: "10px",
                     marginTop: "-20",
                   }}
+                  onClick={()=>disconnectwallet()}
                 >
                   {slicing(window.account)}
                 </button>

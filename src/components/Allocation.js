@@ -37,7 +37,11 @@ export default function Allocation({PresaleContract,presaleBalance,Transfer}) {
     await ConfigurePreslae(PresaleContract,true,logo,Telegram,website,twitter,raddit,github,instagram)
   }
   const AddWhitelist =async()=>{
-      await AddToWhitelist(PresaleContract,makewhitelist);
+    let add = JSON.parse("[" + makewhitelist + "]")
+    console.log(typeof add)
+    console.log(add)
+      await AddToWhitelist(PresaleContract,add);
+
   }
   const REmoveWhitelist =async()=>{
     await RemoveToWhitelist(PresaleContract,removefromWhitelist);
@@ -66,7 +70,7 @@ export default function Allocation({PresaleContract,presaleBalance,Transfer}) {
 
   return (
     <div className='manage-presale'>
-       {presaleBalance == 0 ?<div className='configure-presale'>
+       {presaleBalance != 0 ?<div className='configure-presale'>
           <div className='dowpdown-header'>
              <h5>Transfer Fund to Presale</h5>
              <button className='submit-btn' onClick={()=>Transfer()}>Submit</button>
@@ -98,7 +102,7 @@ export default function Allocation({PresaleContract,presaleBalance,Transfer}) {
              <AiFillCaretDown size={30} onClick={()=>whitelisteshow()}/>
           </div>
          {showAddtowhitelist? <div className='configure-sale'>
-            <input placeholder='[Wallet Address,]' value={makewhitelist} onChange={(e)=> setMakewhitelist(e.target.value)}/>
+            <input placeholder='"wallet address","wallet address",..."wallet address"' value={makewhitelist} onChange={(e)=> setMakewhitelist(e.target.value)}/>
             <button className='submit-btn' onClick={()=>AddWhitelist()}>Submit</button>
           </div>:''}
         </div>
