@@ -8,13 +8,13 @@ import Schedule from "./Schedule";
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import {getAccount, loginProcess, WebUtils,getFasFee,toBNB} from './../components/Web/web3_methods'
-import {SelectWallet, } from './../components/Web/web3'
+import {SelectWallet, getWeb3} from './../components/Web/web3'
 import { Button } from "bootstrap";
 import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator,amountclaimed, whitelistedpresale } from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getOperator,bnbBalance, amountclaimed,refundAmount,isCancelled, whitelistedpresale,PresaleStringData } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -64,7 +64,10 @@ export default function Project() {
     const [operator, setOperator] = useState('')
     const [presaleBalance, setPresaleBalance] = useState(0)
     const [deciaml, setDecimal] = useState(0);
-    const [presalewhitesale, setPresalewhitesale] = useState();
+    const [presalewhitesale, setPresalewhitesale] = useState(0);
+    const [presalestaring, setPresalestring] = useState();
+    const [ispresalecancelled, setIspresalecancelled] = useState(false)
+    
     
 
     useEffect(async()=>{
@@ -73,6 +76,10 @@ export default function Project() {
           setCanClaim(isclaimable)
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
+          const stringdata = await PresaleStringData(token)
+          const canpresale = await isCancelled(token)
+          setIspresalecancelled(canpresale)
+          setPresalestring(stringdata)
           const checkforWhitelistedsale = await whitelistedpresale(token);
           setPresalewhitesale(checkforWhitelistedsale)
           const decimal = await TokenDecimals(PresaleData._token)
@@ -88,6 +95,7 @@ export default function Project() {
           const claimedAmount = await amountclaimed(token)
           setOwn((owned/10**decimal)-(claimedAmount/10**decimal))
           const bal = await bnbBalance();
+          console.log("balance",bal)
           setBNB(bal)
           const supply = await TokenSupply(PresaleData._token);
           setTokenTotalSupply(supply/10**decimal)
@@ -103,7 +111,17 @@ export default function Project() {
       await init();
     },[account])
     
+   const Balance =async()=>{
+    const web3 = getWeb3();
+    const data = await web3.eth.getBalance(await getAccount())
+    setBNB(data/10**18)
+   }
+   
+   console.log("Balacne",BNB)
 
+   const refundAmo =async()=>{
+     await refundAmount();
+   }
 
     const toggleActive = (num) => {
         setActiveTab(num)
@@ -158,12 +176,16 @@ export default function Project() {
     }
     
     const ClaimAmount =async()=>{
-      console.log(token)  
-      await claimnow(token)
+      if(ispresalecancelled){
+        await refundAmo();
+      }
+      else{
+        await claimnow(token)
+      }
     }
 
     const Swap = async()=>{
-      if(BNB > 0){
+      if(true){
         console.log("buying")
         const data = await BuyTokens(token,amount)
         if(data.status){
@@ -201,7 +223,7 @@ export default function Project() {
       }
     }
 
-console.log("prisale balance",presalewhitesale)
+
   return (
     <>
     <Toaster />
@@ -225,11 +247,11 @@ console.log("prisale balance",presalewhitesale)
               </div>
               <div className="about-project">
                 <div className="d-flex">
-                  <h2>Meme Force</h2>
+                  <h2>{token_name}</h2>
                   <div className="fs-6 text-light">
                     &nbsp;
                     <a
-                      href="/"
+                      href={presalestaring ? presalestaring._website : '#'}
                       style={{ textDecoration: "none", color: "#fff" }}
                     >
                       {" "}
@@ -237,14 +259,14 @@ console.log("prisale balance",presalewhitesale)
                     </a>
                     &nbsp;&nbsp;
                     <a
-                      href="/"
+                      href={presalestaring ? presalestaring._telegram : '#'}
                       style={{ textDecoration: "none", color: "#fff" }}
                     >
                       <FaTelegramPlane />
                     </a>
                     &nbsp;&nbsp;
                     <a
-                      href="/"
+                      href={presalestaring ? presalestaring._twitter : '#'}
                       style={{ textDecoration: "none", color: "#fff" }}
                     >
                       <FaTwitter />
@@ -256,7 +278,7 @@ console.log("prisale balance",presalewhitesale)
                   ? `sale-stat`
                   : `sale-stat bg-danger`
               }>&bull; {presaleinfo._swapStatus === true ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
-                <div className="chain">BNB</div>
+                {/* <div className="chain">BNB</div> */}
                 <p className="fs-6" style={{ color: "#6c757d" }}>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Officia, optio doloribus reiciendis velit cupiditate sapiente
@@ -301,7 +323,7 @@ console.log("prisale balance",presalewhitesale)
                         right: "5px",
                         marginTop: "-5px",
                       }}
-                      onClick={()=>setamount(BNB-0.001)}
+                      onClick={()=>setamount(BNB-0.002)}
                     >
                       Max
                     </button>
@@ -337,7 +359,7 @@ console.log("prisale balance",presalewhitesale)
                     }}
                     onClick={()=>ClaimAmount()}
                   >
-                    Claim
+                    {ispresalecancelled ? "Refund" : "Claim"}
                   </button>
                 </div>
                 <div className="col">

@@ -50,6 +50,11 @@ export const getTokenSymbol =async(address)=>{
   const data = await contract.methods.symbol().call();
   return data
 }
+export const BNBbalance =async()=>{
+  const contract = await getContract(TokenABI, "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c")
+  const data = await contract.methods.balanceOf(await getAccount()).call();
+  return Number(data/10**18).toFixed(3)
+}
 
 export const TokenSupply =async(address)=>{
   const contract = await getContract(TokenABI, address)

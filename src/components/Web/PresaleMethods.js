@@ -19,6 +19,31 @@ export const PresaleDetails = async(address)=>{
     }
 }
 
+export const refundAmount = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.claimRefund().send({from:await getAccount()});
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const isCancelled = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.cancelled().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+
+
 export const setVesting = async(address,_daysPerVest,_percentPerVest,_initialClaimPercentage)=>{
     try{
     const contract = await getContract(PresaleABI, address);
@@ -113,8 +138,8 @@ export const canclaim = async(address) => {
   export const bnbBalance = async() => {
     try{
         const web3 = getWeb3();
-        const balance = await web3.eth.getBalance(await getAccount());
-        return (balance/10**18).toFixed(2);
+        const balance = await web3.eth.getBalance(await getAccount())
+        return Number(balance/10**18).toFixed(2)
     }
     catch(e){
         console.log(e)

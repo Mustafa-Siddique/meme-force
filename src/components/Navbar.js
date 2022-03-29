@@ -23,6 +23,11 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="https://github.com/Meme-Force/Whitepaper-v1/blob/main/MF_WP_V1.pdf"  target='_blank'>
+                  WHITEPAPER
+                </a>
+              </li>
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/">
                   BSC CHART

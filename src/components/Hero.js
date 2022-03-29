@@ -5,6 +5,7 @@ import bscscan from '../Images/bscscan.png'
 import ethscan from '../Images/ethscan.png'
 import vidHero from '../Images/MARS.m4v'
 import {Link} from 'react-router-dom'
+import {RiFilePaper2Line} from 'react-icons/ri'
 
 export default function Hero() {
 
@@ -36,6 +37,7 @@ export default function Hero() {
             <Link style={{outline:"none", background:"linear-gradient(to top right, #1c1f24 15%, #000000 100%)", color:"#fff", padding:"8px 25px", textDecoration:"none", letterSpacing:"2px", borderRadius:"5px"}} to='/launchpad'>Launchpad</Link>
         </div>
         <div className="hero-socials">
+            <a href="https://github.com/Meme-Force/Whitepaper-v1/blob/main/MF_WP_V1.pdf" target='_blank'><span ref={heroTele}>Whitepaper</span> <RiFilePaper2Line/></a>
             <a href="https://t.me/MemeForceOfficial"><span ref={heroTele}>Telegram</span> <FaTelegramPlane/></a>
             <a href="http://bscscan.com/"><span ref={heroBsc}>BSC Scan</span> <img src={bscscan} alt=""/></a>
             <a href="https://etherscan.io/"><span ref={heroEth}>Ether Scan</span> <img src={ethscan} alt=""/></a>
