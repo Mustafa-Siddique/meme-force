@@ -637,7 +637,7 @@
 .project-head .logo img{
   height: 90px;
   width: 90px;
-  border-radius: 50%;
+  border-radius: 0%;
   transition-duration: 5s;
 }
 .project-head:hover img{

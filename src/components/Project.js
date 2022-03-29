@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logoBg from "../Images/anim-icon.png";
-import { FaTelegramPlane, FaTwitter, FaGlobe } from "react-icons/fa";
+import { FaTelegramPlane, FaTwitter, FaGlobe, FaInstagram, FaReddit } from "react-icons/fa";
 import Navlaunch from "./Navlaunch";
 import vidProject from '../Images/projectbg.mp4'
 import ProjectDetails from "./ProjectDetails";
@@ -243,7 +243,7 @@ export default function Project() {
                   src={presalestaring ? presalestaring.logo : "#"}
                   alt=""
                 />
-                <img id="project-logo-anim" src={logoBg} alt="" />
+                {/* <img id="project-logo-anim" src={logoBg} alt="" /> */}
               </div>
               <div className="about-project">
                 <div className="d-flex">
@@ -263,6 +263,20 @@ export default function Project() {
                       style={{ textDecoration: "none", color: "#fff" }}
                     >
                       <FaTelegramPlane />
+                    </a>
+                    &nbsp;&nbsp;
+                    <a
+                      href={presalestaring ? presalestaring._instagram : '#'}
+                      style={{ textDecoration: "none", color: "#fff" }}
+                    >
+                      <FaInstagram />
+                    </a>
+                    &nbsp;&nbsp;
+                    <a
+                      href={presalestaring ? presalestaring._reddit : '#'}
+                      style={{ textDecoration: "none", color: "#fff" }}
+                    >
+                      <FaReddit />
                     </a>
                     &nbsp;&nbsp;
                     <a

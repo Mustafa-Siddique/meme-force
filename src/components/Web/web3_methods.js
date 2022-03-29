@@ -6,8 +6,8 @@ export const loginProcess = async () => {
     await window.ethereum.enable()
     //   return await getAccount();
   } catch (err) {
-    console.log('check chain error:', err)
-    window.location.replace('/')
+    // console.log('check chain error:', err)
+    // window.location.replace('/')
   }
 }
 
