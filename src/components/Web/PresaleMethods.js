@@ -1,4 +1,4 @@
-import { PresaleABI } from './ABI/Presale'
+import { PresaleABI } from './ABI/Presale_MainNet'
 import { getAccount, getContract } from './web3_methods'
 import { getWeb3 } from './web3';
 
