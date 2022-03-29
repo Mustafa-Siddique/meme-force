@@ -1,4 +1,4 @@
-const Factory_TestNet = '0xAcBa2855DA94279328A19c9E8A0475409D562169'
+const Factory_TestNet = '0x8597680ede04003CeC4d19EcD7853CBBF9fa83Df'
 const Factory_MainNet = ''
 const Testnet_ID = 97
 const Mainnet_ID = 56
