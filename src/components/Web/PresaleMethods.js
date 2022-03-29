@@ -19,6 +19,17 @@ export const PresaleDetails = async(address)=>{
     }
 }
 
+export const whitelistedpresale =async(address)=>{
+    try{
+        const contract = await getContract(PresaleABI, address);
+        const data = await contract.methods.isWhiteListEnabled().call();
+        return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 export const CheckForWhiteAccount = async(address)=>{
     try{
     const contract = await getContract(PresaleABI, address);

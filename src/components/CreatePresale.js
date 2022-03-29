@@ -104,7 +104,7 @@ export default function CreatePresale() {
       let data
       const starttime = (new Date(startTime).getTime() / 1000).toFixed(0)
       const end = (new Date(endTime).getTime() / 1000).toFixed(0)
-      console.log(starttime,end)
+
       const min = WebUtils(minBuy);
       const max = WebUtils(maxBuy);
       const soft = WebUtils(softCap);

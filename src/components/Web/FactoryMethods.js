@@ -62,6 +62,7 @@ export const TokenName =async(address)=>{
   const data = await contract.methods.name().call();
   return data
 }
+
 export const TokenDecimals =async(address)=>{
   const contract = await getContract(TokenABI, address)
   const data = await contract.methods.decimals().call();

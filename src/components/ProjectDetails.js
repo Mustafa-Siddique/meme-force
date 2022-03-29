@@ -1,6 +1,13 @@
 import React from "react";
+import {network_version} from './Web/web3_methods'
+import { useEffect, useState } from 'react';
 
 export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo,presaleaddress,decimal}) {
+
+  useEffect(async()=>{
+      const netversion = await network_version();
+      console.log(netversion)
+  },[])
 
   const slicing = (address) => {
     const first = address.slice(0,10);
@@ -27,10 +34,18 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
               <td>Maximum Buy</td>
               <td>{presaleinfo ? (presaleinfo._maxBuy)/10**18 : '0'} BNB</td>
             </tr>
-            {/* <tr>
-              <td>Total Users Participated</td>
-              <td>@twitter</td>
-            </tr> */}
+            <tr>
+              <td>Minimun Buy</td>
+              <td>{presaleinfo ? presaleinfo._minBuy/10**18 : "0"} BNB</td>
+            </tr>
+            <tr>
+              <td>SoftCap</td>
+              <td>{presaleinfo ? presaleinfo._softCap/10**18 : "0"} BNB</td>
+            </tr>
+            <tr>
+              <td>HardCap</td>
+              <td>{presaleinfo ? presaleinfo._hardCap/10**18 : "0"} BNB</td>
+            </tr>
             <tr>
               <td>Total Funds Raised</td>
               <td>{presaleinfo ? presaleinfo._totalRaised/10**18 : '0'} BNB</td>
@@ -57,7 +72,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
           <tbody>
             <tr>
               <td>Name</td>
-              <td>{tokenName}</td>
+              <td>{tokenName}&nbsp;&nbsp;<a href={`https://testnet.bscscan.com/address/${presaleinfo ?presaleinfo._token:''}`} style={{color:'#ffffff'}}>{presaleinfo ? slicing(presaleinfo._token) : ''}</a></td>
             </tr>
             <tr>
               <td>Token Symbol</td>

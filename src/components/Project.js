@@ -14,7 +14,7 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator,amountclaimed } from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, bnbBalance, getOperator,amountclaimed, whitelistedpresale } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +23,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function Project() {
+
   const notify = () => Tost('Swap success!', {
     position: "top-left",
     autoClose: 2200,
@@ -33,6 +34,7 @@ export default function Project() {
     draggable: true,
     progress: undefined,
     });
+
   const notifyError = () => Tost.error('Error!', {
       position: "top-left",
       autoClose: 2200,
@@ -57,19 +59,22 @@ export default function Project() {
     const [BNB, setBNB] = useState(0)
     const [tokenTotalSupply, setTokenTotalSupply] = useState()
     const [token_name, setTokenName] = useState('')
+    const [token_, setToken_] = useState('')
     const [isaccountwhitelisted, setIsaccountwhitelisted] = useState();
     const [operator, setOperator] = useState('')
     const [presaleBalance, setPresaleBalance] = useState(0)
-    const [deciaml, setDecimal] = useState(0)
+    const [deciaml, setDecimal] = useState(0);
+    const [presalewhitesale, setPresalewhitesale] = useState();
     
 
     useEffect(async()=>{
         const init =async()=>{
-         
           const isclaimable = await canclaim(token)
           setCanClaim(isclaimable)
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
+          const checkforWhitelistedsale = await whitelistedpresale(token);
+          setPresalewhitesale(checkforWhitelistedsale)
           const decimal = await TokenDecimals(PresaleData._token)
           setDecimal(Number(decimal))
           const balan = await BalanceOfPresaleContract(PresaleData._token,token)
@@ -89,7 +94,6 @@ export default function Project() {
           const namn = await TokenName(PresaleData._token);
           setTokenName(namn)
           const operat = await getOperator(token)
-
           setOperator(operat)
           const acount = await getAccount();
           setAccount(acount);
@@ -122,8 +126,7 @@ export default function Project() {
       const acount = await getAccount();
       setAccount(acount);
       window.account = account
-      toggleModal()
-    
+      toggleModal();
     }
 
     const RuningFun = async()=>{
@@ -138,7 +141,7 @@ export default function Project() {
       setPresaleInfo(PresaleData)
     }
     
-    const ConnectWallet =async()=>{
+    const ConnectWallet =async()=> {
       window.WC = true
       window.MM = false
       await SelectWallet();
@@ -189,7 +192,16 @@ export default function Project() {
       }
     }
 
-console.log("prisale balance",presaleBalance,Own)
+    const forWhitelistedPreslae =()=>{
+      if(isaccountwhitelisted){
+        return "WhiiteListed " + slicing(account);
+      }
+      else{
+        return "You are Not WhiiteListed "
+      }
+    }
+
+console.log("prisale balance",presalewhitesale)
   return (
     <>
     <Toaster />
@@ -262,7 +274,7 @@ console.log("prisale balance",presaleBalance,Own)
                     }}
                     onClick={()=>toggleModal()}
                   >
-                    {!account ? "Connect" : slicing(account)}
+                    {presalewhitesale ? forWhitelistedPreslae() : !account ? "Connect" : slicing(account)}
                   </button>
               </div>
             </div>
