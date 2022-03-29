@@ -9,22 +9,27 @@ import { PresaleDetails, PresaleStringData } from "./Web/PresaleMethods";
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import Navlaunch from "./Navlaunch";
-import { getAccount, loginProcess, CheckChain } from "./../components/Web/web3_methods";
+import { getAccount, loginProcess, CheckChain,getChain } from "./../components/Web/web3_methods";
 import { SelectWallet, DisconnectWallet } from "./../components/Web/web3";
 import {getTokenSymbol,TokenName} from './Web/FactoryMethods'
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo.png";
 import fav from "../Images/logo192.png";
 import ReactLoading from "react-loading";
+import { getWeb3 } from "./../components/Web/web3";
+import ETH from './../Images/eth.png'
+import BNB from './../Images/bnb.png'
 
 export default function ProjectsOpen() {
   /* COUNTDOWN */
 
-  const countdownDate = "2022-02-28 17:00";
+  const countdownDate = "2022-03-28 19:00 UTC";
   const [presaleInformation, serPresaleInformation] = useState();
   const [acount, setAccount] = useState();
   const [modal, setModal] = useState(false);
   const [allPresales, setallPresales] = useState([]);
+  const [ShowNetWrok, setShowNetWork] = useState(false)
+  const [chainid,setChainID] = useState(0)
 
   const [
     {
@@ -45,10 +50,13 @@ export default function ProjectsOpen() {
     };
   }, [expired]);
 
+
   useEffect(async () => {
     try {
      if(window.account){
       const chainID = await CheckChain()
+      const id = await getChain()
+      setChainID(parseInt(id))
       if(chainID){
         const numberofpresale = await NumberOFPresale();
         for (let i = numberofpresale; i > 0; i--) {
@@ -66,7 +74,7 @@ export default function ProjectsOpen() {
        serPresaleInformation(allPresales);
       }
       else {
-        Warning();
+        // Warning();
       }
       
     }
@@ -155,6 +163,8 @@ export default function ProjectsOpen() {
     const second = address.slice(36);
     return first + "...." + second;
   };
+
+  
 
   const renderOwner = (projectInfo, index) => {
     return (
@@ -256,8 +266,71 @@ export default function ProjectsOpen() {
     );
   };
 
+  const [showNetwork, setShowNetwrok] = useState(false)
+
+  const changeNetwork = async (chainId) => {
+    if (window.ethereum) {
+      const Web3 = getWeb3();
+      try{
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: Web3.utils.toHex(chainId) }],
+      });
+      }
+      catch(e){
+
+      }
+  }}
+
+  const NetWorkPopup = () => {
+    setShowNetWork(!ShowNetWrok);
+  };
+  if (ShowNetWrok) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+
+  console.log("chainID",chainid)
+
   return (
     <>
+    {ShowNetWrok && (
+        <div>
+          <div onClick={() => NetWorkPopup()} className="overlay-popup"></div>
+            <div className="modal-content wallet-select">
+              <label
+                for="category"
+                style={{
+                  backgroundColor: "#161C24",
+                  color: "#ffffff",
+                  fontSize: "17px",
+                }}
+                className="form-label fw-bold py-3 text-center position-relative"
+              >
+                Select Wallet
+              </label>
+              <div className="networkds">
+                <div className="netowrk" onClick={()=>changeNetwork(97)}>
+                  <img src={BNB} width={30}/>
+                  <p>BSC TESTNET</p>
+                </div>
+                <div className="netowrk" onClick={()=>changeNetwork(56)}>
+                  <img src={BNB} width={30}/>
+                  <p>BSC MAINNET</p>
+                </div>
+                <div className="netowrk" onClick={()=>changeNetwork(1)}>
+                  <img src={ETH} width={30}/>
+                  <p>ETHEREUM MAINNET</p>
+                </div>
+                <div className="netowrk" onClick={()=>changeNetwork(4)}>
+                  <img src={ETH} width={30}/>
+                  <p>RINKEBY TESTNET</p>
+                </div>
+              </div>
+            </div>
+        </div>
+      )}
       <div style={{ width: "100%" }}>
         <nav className="navbar mx-auto navbar-expand-lg navbar-dark">
           <div className="container-fluid">
@@ -332,6 +405,19 @@ export default function ProjectsOpen() {
                 Create Presale
               </NavLink>
             </div>
+            <button
+              onClick={()=>NetWorkPopup()}
+              style={{
+                textDecoration: "none",
+                color: "white",
+                border: "none",
+                padding: "7px",
+                background: "#201F21",
+                marginLeft:'10px'
+              }}
+            >
+              {chainid == 97 ? <span><img src={BNB} width={20}/> BSC TEST NET</span> : chainid == 56 ? <span><img src={BNB} width={20}/> BSC MAIN NET</span> : chainid == 1 ? <span><img src={ETH} width={20}/> ETHEREUM MAIN NET</span> : chainid == 4 ? <span><img src={ETH} width={20}/> RINKEBY TEST NET</span> : "SWITCH NETWORK"}
+            </button>
             <div className="mob-rate">
               <a className="nav-link active mx-3" href="/">
                 <img src={fav} style={{ height: "25px" }} alt="" /> $0.0005

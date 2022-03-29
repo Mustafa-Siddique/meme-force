@@ -797,3 +797,20 @@ input::-webkit-inner-spin-button {
   color: rgb(255, 255, 255);
   opacity: 1; /* Firefox */
 }
+
+.networkds{
+  display: flex;
+  flex-wrap: wrap;
+  max-width:280px;
+  margin: 5px;
+  justify-content: center;
+}
+.netowrk{
+  text-align: center;
+  background-color: #1a1a1a;
+  padding: 13px;
+  width: 120px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}

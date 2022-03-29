@@ -52,6 +52,7 @@ export default function Navlaunch() {
             >
               Launchpad
             </NavLink>
+           
           </div>
           <div className="mob-rate">
             <a className="nav-link active mx-3" href="/">

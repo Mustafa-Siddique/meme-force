@@ -177,6 +177,19 @@ export const PresaleABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "bool",
+        name: "cancelled",
+        type: "bool",
+      },
+    ],
+    name: "presaleCancelled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "user",
@@ -363,6 +376,19 @@ export const PresaleABI = [
     name: "configurePresale",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "daysPerVest",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -576,6 +602,38 @@ export const PresaleABI = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "hasClaimedRefund",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "initialClaimPercentage",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "instagram",
     outputs: [
@@ -758,6 +816,19 @@ export const PresaleABI = [
   },
   {
     inputs: [],
+    name: "percentPerVest",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "presaleFactoryOwner",
     outputs: [
       {
@@ -824,6 +895,42 @@ export const PresaleABI = [
       },
     ],
     name: "setMinBuy",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_daysPerVest",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_percentPerVest",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_initialClaimPercentage",
+        type: "uint256",
+      },
+    ],
+    name: "setVestingParameters",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_vestingStartDate",
+        type: "uint256",
+      },
+    ],
+    name: "setVestingStartDate",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1025,6 +1132,19 @@ export const PresaleABI = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "vestingStartDate",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

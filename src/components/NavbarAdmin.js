@@ -8,10 +8,12 @@ import {SelectWallet} from './../components/Web/web3'
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import {getAccount, loginProcess} from './../components/Web/web3_methods'
+import { getWeb3 } from "./../components/Web/web3";
 
 export default function NavbarAdmin() {
   const [acount, setAccount] = useState();
   const [modal, setModal] = useState(false);
+  
 
   useEffect(()=>{
     if(window.account){
@@ -53,6 +55,25 @@ export default function NavbarAdmin() {
     const first = address.slice(0,5);
     const second = address.slice(36);
     return first + "...." + second
+  }
+
+
+  const [showNetwork, setShowNetwrok] = useState(false)
+  const changeNetwork = async (chainId) => {
+    if (window.ethereum) {
+      const Web3 = getWeb3();
+      try{
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: Web3.utils.toHex(chainId) }],
+      });
+      }
+      catch(e){
+
+      }
+    }}
+  const ShowNetworkWin =()=> {
+    setShowNetwrok(false)
   }
 
   return (
@@ -158,6 +179,31 @@ export default function NavbarAdmin() {
                   >
                     Launch Pad
                   </Link>
+                </li>
+                <li>
+                  <button
+                    className="nav-a active"
+                    aria-current="page"
+                    onClick={()=>ShowNetworkWin()}
+                    style={{
+                      color: "white",
+                      textDecoration: "none",
+                      padding: "5px",
+                      background: "#201F21",
+                      border: "none",
+                      marginTop:'-10px'
+                    }}
+                  >
+                    Switch NetWork 
+                  </button>
+                  {showNetwork ? <div className="networkds">
+                      <ul>
+                        <li onClick={()=>changeNetwork(97)}>BSC TESTNET</li>
+                        <li onClick={()=>changeNetwork(56)}>BSC MAINNET</li>
+                        <li onClick={()=>changeNetwork(1)}>ETHEREUM MAINNET</li>
+                        <li onClick={()=>changeNetwork(4)}>RINKEBY TESTNET</li>
+                      </ul>
+                  </div>: ''}
                 </li>
               </ul>
             </div>

@@ -9,6 +9,7 @@ import {
   RemoveToWhitelist,
   AddToWhitelist,
   ConfigurePreslae,
+  setVesting
 } from "./Web/PresaleMethods";
 
 export default function Allocation({
@@ -32,12 +33,19 @@ export default function Allocation({
   const [twitter, setTwitter] = useState();
   const [Telegram, setTelegram] = useState();
   const [instagram, setInstagram] = useState();
+  const [showvesting, setShowvesting] = useState(false)
+  const [daypervest, setDaypervest] = useState(0)
+  const [percentagevest, setPrecentagevest] = useState(0)
+  const [initialclaimvest, setInitialclaimvest] = useState(0)
 
   const configshow = () => {
     setShowConfig(!showConfig);
   };
   const whitelisteshow = () => {
     setshowAddtowhitelist(!showAddtowhitelist);
+  };
+  const VestingShow = () => {
+    setShowvesting(!showvesting);
   };
   const timeing = () => {
     setshowtiming(!showtiming);
@@ -94,6 +102,9 @@ export default function Allocation({
 
   const SwitchtoPublic = async () => {
     await SwitchToPublic(PresaleContract, true);
+  };
+  const setvesting = async () => {
+    await setVesting(PresaleContract, daypervest, percentagevest, initialclaimvest);
   };
 
   return (
@@ -228,6 +239,39 @@ export default function Allocation({
               onChange={(e) => setEnd(e.target.value)}
             />
             <button className="submit-btn" onClick={() => ChangeTiming()}>
+              Submit
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+    <div className="configure-presale">
+        <div className="dowpdown-header">
+          <h5>Set Vesting</h5>
+          <AiFillCaretDown size={30} onClick={() => VestingShow()} />
+        </div>
+        {showvesting ? (
+          <div className="configure-sale">
+            <input
+              type="number"
+              placeholder="Day per Vest"
+              value={daypervest}
+              onChange={(e) => setDaypervest(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Percentage per Vest"
+              value={percentagevest}
+              onChange={(e) => setPrecentagevest(e.target.value)}
+            />
+             <input
+              type="number"
+              placeholder="Initialclaim per Vest"
+              value={initialclaimvest}
+              onChange={(e) => setInitialclaimvest(e.target.value)}
+            />
+            <button className="submit-btn" onClick={() => setvesting()}>
               Submit
             </button>
           </div>

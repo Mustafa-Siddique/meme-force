@@ -19,6 +19,18 @@ export const PresaleDetails = async(address)=>{
     }
 }
 
+export const setVesting = async(address,_daysPerVest,_percentPerVest,_initialClaimPercentage)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.setVestingParameters(_daysPerVest,_percentPerVest,_initialClaimPercentage).send({from: await getAccount()});
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
 export const whitelistedpresale =async(address)=>{
     try{
         const contract = await getContract(PresaleABI, address);
