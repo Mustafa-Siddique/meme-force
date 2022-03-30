@@ -1,6 +1,13 @@
 import Web3 from "web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+
 let httpProvider = null
+const etherumprovider = new Web3.providers.HttpProvider(
+  process.env.REACT_APP_RPCURL,
+  {
+    timeout: 10000,
+  }
+);
 var provider = new WalletConnectProvider({
   rpc: {
     56: 'https://bsc-dataseed1.ninicoin.io',

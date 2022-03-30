@@ -9,6 +9,7 @@ import Project from "./components/Project";
 // import Schedule from "./components/Schedule";
 // import Allocation from "./components/Allocation";
 import AdminPanel from "./components/AdminPanel";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

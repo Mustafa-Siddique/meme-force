@@ -14,11 +14,12 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getOperator,bnbBalance, amountclaimed,refundAmount,isCancelled, whitelistedpresale,PresaleStringData } from "./Web/PresaleMethods";
-import { TokenSupply, TokenName, TransferAmountFromToken,BalanceOfPresaleContract } from "./Web/FactoryMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails,getPayee, getOperator,bnbBalance, amountclaimed,refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description } from "./Web/PresaleMethods";
+import { TokenSupply, TokenName, TransferAmountFromToken, BalanceOfPresaleContract} from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import toast, { Toaster } from 'react-hot-toast';
+
 
 
 
@@ -67,15 +68,30 @@ export default function Project() {
     const [presalewhitesale, setPresalewhitesale] = useState(0);
     const [presalestaring, setPresalestring] = useState();
     const [ispresalecancelled, setIspresalecancelled] = useState(false)
+    const [payee, setPayee] = useState('')
+    const [discription, setDescription] = useState('')
     
     
 
     useEffect(async()=>{
+      try{
+        const mm = window.localStorage.getItem("MM")
+        if(mm){
+          ConsisConnectMetaMask();
+        }
+      }
+      catch(e){
+  
+      }
         const init =async()=>{
           const isclaimable = await canclaim(token)
           setCanClaim(isclaimable)
           const PresaleData = await PresaleDetails(token)
           setPresaleInfo(PresaleData)
+          const payee = await getPayee(token)
+          setPayee(payee)
+          const descript = await Description()
+          setDescription(descript)
           const stringdata = await PresaleStringData(token)
           const canpresale = await isCancelled(token)
           setIspresalecancelled(canpresale)
@@ -95,7 +111,6 @@ export default function Project() {
           const claimedAmount = await amountclaimed(token)
           setOwn((owned/10**decimal)-(claimedAmount/10**decimal))
           const bal = await bnbBalance();
-          console.log("balance",bal)
           setBNB(bal)
           const supply = await TokenSupply(PresaleData._token);
           setTokenTotalSupply(supply/10**decimal)
@@ -144,7 +159,17 @@ export default function Project() {
       const acount = await getAccount();
       setAccount(acount);
       window.account = account
+      window.localStorage.setItem("MM", "0")
       toggleModal();
+    }
+    const ConsisConnectMetaMask =async()=> {
+      window.WC = false
+      window.MM = true
+      await SelectWallet();
+      await loginProcess();
+      const acount = await getAccount();
+      setAccount(acount);
+      window.account = acount
     }
 
     const RuningFun = async()=>{
@@ -168,6 +193,7 @@ export default function Project() {
       window.account = account
       toggleModal()
     }
+    
 
     const slicing = (address) => {
       const first = address.slice(0,10);
@@ -294,10 +320,7 @@ export default function Project() {
               }>&bull; {presaleinfo._swapStatus === true ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
                 {/* <div className="chain">BNB</div> */}
                 <p className="fs-6" style={{ color: "#6c757d" }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Officia, optio doloribus reiciendis velit cupiditate sapiente
-                  eius animi vel ullam quo? Accusamus rem, magnam aut non
-                  corrupti nobis porro ducimus accusantium?
+                  {discription}
                 </p>
                 <button
                     className="btn mt-4"
@@ -426,18 +449,19 @@ export default function Project() {
                 Schedule
               </button>
             </li> */}
-           {operator == account ? <li className="nav-item">
+           {account == operator && payee == operator ? <li className="nav-item">
               <button className={activeTab === 3? "nav-link active":"nav-link"} onClick={()=> toggleActive(3)}>
                 Manage Presale
               </button>
             </li> : ''}
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance}/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance} payee={payee}/>}
           </div>
         </div>
       </div>  
     </div>
+    
     {modal && (
               <div>
                 <div onClick={() => toggleModal()} className="overlay-popup">

@@ -19,6 +19,39 @@ export const PresaleDetails = async(address)=>{
     }
 }
 
+export const transfertoPayee = async(address,payee)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.transferFunds().send({from: await getAccount()});
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const Description =async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.projectDescription().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const getPayee = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods._payee().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 export const refundAmount = async(address)=>{
     try{
     const contract = await getContract(PresaleABI, address);
@@ -179,10 +212,10 @@ export const canclaim = async(address) => {
     }
   }
 
-  export const ConfigurePreslae = async(address,isWhiteListEnabled,logo,telegram,website,twitter,reddit,github,instagram) => {
+  export const ConfigurePreslae = async(address,isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram) => {
     try{
         const contract = await getContract(PresaleABI, address);
-        const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,telegram,website,twitter,reddit,github,instagram).send({from: await getAccount()});
+        const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram).send({from: await getAccount()});
         return result;
     }
     catch(e){

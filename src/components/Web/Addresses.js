@@ -9,6 +9,6 @@ export const EnvAdd = {
     REACT_APP_FACTORY: Factory_MainNet,
     REACT_APP_RPCURL_TESTNET:"https://data-seed-prebsc-1-s1.binance.org:8545/",
     REACT_APP_RPCURL_MAINNET:"https://bsc-dataseed.binance.org/",
-    React_App_chain_Id:Mainnet_ID ,
+    React_App_chain_Id:Mainnet_ID,
     REACT_APP_TOEKN:Testnet_token
 }

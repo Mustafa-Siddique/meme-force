@@ -9,13 +9,15 @@ import {
   RemoveToWhitelist,
   AddToWhitelist,
   ConfigurePreslae,
-  setVesting
+  setVesting,
+  transfertoPayee
 } from "./Web/PresaleMethods";
 
 export default function Allocation({
   PresaleContract,
   presaleBalance,
   Transfer,
+  payee
 }) {
   const [showConfig, setShowConfig] = useState(false);
   const [showAddtowhitelist, setshowAddtowhitelist] = useState(false);
@@ -37,7 +39,7 @@ export default function Allocation({
   const [daypervest, setDaypervest] = useState(0)
   const [percentagevest, setPrecentagevest] = useState(0)
   const [initialclaimvest, setInitialclaimvest] = useState(0)
-
+  const [artical, setArtical] = useState('')
   const configshow = () => {
     setShowConfig(!showConfig);
   };
@@ -66,6 +68,7 @@ export default function Allocation({
       PresaleContract,
       enable,
       logo,
+      artical,
       Telegram,
       website,
       twitter,
@@ -107,6 +110,9 @@ export default function Allocation({
     await setVesting(PresaleContract, daypervest, percentagevest, initialclaimvest);
   };
 
+  const Fundtopayee = async ()=>{
+      await  transfertoPayee(PresaleContract,payee);
+  }
   return (
     <div className="manage-presale">
       {presaleBalance == 0 ? (
@@ -140,6 +146,11 @@ export default function Allocation({
               placeholder="Logo URL"
               value={logo}
               onChange={(e) => setLogo(e.target.value)}
+            />
+            <input
+              placeholder="Discription"
+              value={artical}
+              onChange={(e) => setArtical(e.target.value)}
             />
             <input
               placeholder="Telegram Link"
@@ -291,6 +302,14 @@ export default function Allocation({
         <div className="dowpdown-header">
           <h5>Claim Operator Funds</h5>
           <button className="submit-btn" onClick={() => ClaimFundsofOperator()}>
+            Submit
+          </button>
+        </div>
+      </div>
+      <div className="configure-presale">
+        <div className="dowpdown-header">
+          <h5>Transfer Funds to Payee</h5>
+          <button className="submit-btn" onClick={() => Fundtopayee()}>
             Submit
           </button>
         </div>

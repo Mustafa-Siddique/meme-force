@@ -9,6 +9,7 @@ import {createpresale} from './Web/FactoryMethods'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 export default function CreatePresale() {
 
   const notify = () => toast('Presale Created Successfully!', {
@@ -45,6 +46,7 @@ export default function CreatePresale() {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [fundLP, setFundLP] = useState();
+ 
 
   useEffect(()=>{
     if(window.account){
@@ -163,10 +165,12 @@ export default function CreatePresale() {
     toggleModal()
   }
 
+
   
   return (
     <>
        <ToastContainer/>
+       
       <section>
         <div className="presale-container">
           <div
@@ -419,7 +423,7 @@ export default function CreatePresale() {
         )}
       </section>
 
-      <section>
+      {/* <section>
         <div
           className="community-container d-flex align-items-center justify-content-between"
           style={{
@@ -484,7 +488,7 @@ export default function CreatePresale() {
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
       {modal && (
               <div>
                 <div onClick={() => toggleModal()} className="overlay-popup">

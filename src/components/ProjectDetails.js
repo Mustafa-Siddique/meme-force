@@ -28,7 +28,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
           <tbody>
             <tr>
               <td>Presale Address</td>
-            <a href={`https://testnet.bscscan.com/address/${presaleaddress}`} style={{color:'#ffffff'}}><td>{slicing(presaleaddress)}</td></a>
+            <a href={`https://bscscan.com/address/${presaleaddress}`} style={{color:'#ffffff'}}><td>{slicing(presaleaddress)}</td></a>
             </tr>
             <tr>
               <td>Maximum Buy</td>
@@ -72,7 +72,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
           <tbody>
             <tr>
               <td>Name</td>
-              <td>{tokenName}&nbsp;&nbsp;<a href={`https://testnet.bscscan.com/address/${presaleinfo ?presaleinfo._token:''}`} style={{color:'#ffffff'}}>{presaleinfo ? slicing(presaleinfo._token) : ''}</a></td>
+              <td>{tokenName}&nbsp;&nbsp;<a href={`https://bscscan.com/address/${presaleinfo ?presaleinfo._token:''}`} style={{color:'#ffffff'}}>{presaleinfo ? slicing(presaleinfo._token) : ''}</a></td>
             </tr>
             <tr>
               <td>Token Symbol</td>

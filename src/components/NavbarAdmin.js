@@ -9,10 +9,14 @@ import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
 import {getAccount, loginProcess} from './../components/Web/web3_methods'
 import { getWeb3 } from "./../components/Web/web3";
+import ETH from './../Images/eth.png'
+import BNB from './../Images/bnb.png'
+import { isMobile } from 'react-device-detect'
 
 export default function NavbarAdmin() {
   const [acount, setAccount] = useState();
   const [modal, setModal] = useState(false);
+  const [ShowNetWrok, setShowNetWork] = useState(false)
   
 
   useEffect(()=>{
@@ -58,26 +62,69 @@ export default function NavbarAdmin() {
   }
 
 
-  const [showNetwork, setShowNetwrok] = useState(false)
   const changeNetwork = async (chainId) => {
     if (window.ethereum) {
-      const Web3 = getWeb3();
-      try{
+      const Web3 = getWeb3()
+      try {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: Web3.utils.toHex(chainId) }],
-      });
-      }
-      catch(e){
-
-      }
-    }}
-  const ShowNetworkWin =()=> {
-    setShowNetwrok(false)
+        })
+      } catch (e) {}
+    }
+    NetWorkPopup();
   }
+
+  const NetWorkPopup = () => {
+    setShowNetWork(!ShowNetWrok)
+  }
+  if (ShowNetWrok) {
+    document.body.classList.add('active-modal')
+  } else {
+    document.body.classList.remove('active-modal')
+  }
+
+
+
 
   return (
     <>
+    {ShowNetWrok && (
+        <div>
+          <div onClick={() => NetWorkPopup()} className="overlay-popup"></div>
+          <div className="modal-content wallet-select">
+            <label
+              for="category"
+              style={{
+                backgroundColor: '#161C24',
+                color: '#ffffff',
+                fontSize: '17px',
+              }}
+              className="form-label fw-bold py-3 text-center position-relative"
+            >
+              Select Wallet
+            </label>
+            <div className="networkds">
+              <div className="netowrk" onClick={() => changeNetwork(97)}>
+                <img src={BNB} width={30} />
+                <p>BSC TESTNET</p>
+              </div>
+              <div className="netowrk" onClick={() => changeNetwork(56)}>
+                <img src={BNB} width={30} />
+                <p>BSC MAINNET</p>
+              </div>
+              <div className="netowrk" onClick={() => changeNetwork(1)}>
+                <img src={ETH} width={30} />
+                <p>ETHEREUM MAINNET</p>
+              </div>
+              <div className="netowrk" onClick={() => changeNetwork(4)}>
+                <img src={ETH} width={30} />
+                <p>RINKEBY TESTNET</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <section>
         <nav className="navbar navbar-expand-lg navbar-light bg-none">
           <div className="container-fluid">
@@ -184,7 +231,7 @@ export default function NavbarAdmin() {
                   <button
                     className="nav-a active"
                     aria-current="page"
-                    onClick={()=>ShowNetworkWin()}
+                    onClick={()=>NetWorkPopup()}
                     style={{
                       color: "white",
                       textDecoration: "none",
@@ -196,14 +243,6 @@ export default function NavbarAdmin() {
                   >
                     Switch NetWork 
                   </button>
-                  {showNetwork ? <div className="networkds">
-                      <ul>
-                        <li onClick={()=>changeNetwork(97)}>BSC TESTNET</li>
-                        <li onClick={()=>changeNetwork(56)}>BSC MAINNET</li>
-                        <li onClick={()=>changeNetwork(1)}>ETHEREUM MAINNET</li>
-                        <li onClick={()=>changeNetwork(4)}>RINKEBY TESTNET</li>
-                      </ul>
-                  </div>: ''}
                 </li>
               </ul>
             </div>
