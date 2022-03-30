@@ -4,10 +4,10 @@ import { AiOutlineTwitter } from "react-icons/ai";
 import { SiDiscord } from "react-icons/si";
 import { FaTelegramPlane } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import {SelectWallet} from './../components/Web/web3'
+import {SelectWallet,DisconnectWallet} from './../components/Web/web3'
 import Metamask from "./../Images/metamask.png";
 import WalletConnect from "./../Images/walletconnect.png";
-import {getAccount, loginProcess} from './../components/Web/web3_methods'
+import {getAccount, loginProcess, getChain} from './../components/Web/web3_methods'
 import { getWeb3 } from "./../components/Web/web3";
 import ETH from './../Images/eth.png'
 import BNB from './../Images/bnb.png'
@@ -17,13 +17,17 @@ export default function NavbarAdmin() {
   const [acount, setAccount] = useState();
   const [modal, setModal] = useState(false);
   const [ShowNetWrok, setShowNetWork] = useState(false)
+  const [chainid, setChainID] = useState(0)
   
 
-  useEffect(()=>{
+  useEffect(async()=>{
+    const chainID = await getChain()
+    setChainID(chainID)
     if(window.account){
+      
       setAccount(window.account)
     }
-  },[window.account])
+  },[acount])
 
   const toggleModal = () => {
     setModal(!modal);
@@ -84,6 +88,12 @@ export default function NavbarAdmin() {
     document.body.classList.remove('active-modal')
   }
 
+  const disconnectwallet = async () => {
+    await DisconnectWallet()
+    setAccount(undefined)
+    window.localStorage.removeItem('MM')
+    window.account = false
+  }
 
 
 
@@ -127,7 +137,7 @@ export default function NavbarAdmin() {
       )}
       <section>
         <nav className="navbar navbar-expand-lg navbar-light bg-none">
-          <div className="container-fluid">
+        {!isMobile ? <div className="container-fluid">
             <a className="navbar-brand" href="/">
               <img src={logo} alt="" />
             </a>
@@ -143,7 +153,7 @@ export default function NavbarAdmin() {
             >
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarText">
+             <div className="collapse navbar-collapse" id="navbarText">
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li>
                   <a
@@ -245,8 +255,74 @@ export default function NavbarAdmin() {
                   </button>
                 </li>
               </ul>
+            </div> 
+          </div>: 
+          
+          <div className="container-fluid">
+              <a className="navbar-brand" href="/">
+                <img src={logo} alt="" style={{width:'70px'}} />
+              </a>
+              <div className="dropdown-slid">
+                {acount ? <div class="dropdown admindrop" style={{marginLeft:'20px'}}>
+                  <button
+                    class="connectbtn dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {slicing(acount)}
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-dark"
+                    aria-labelledby="dropdownMenuButton2"
+                  >
+                    
+                    <li className="dropdown-i" onClick={() => NetWorkPopup()}>
+                      {chainid == 97 ? (
+                        <span>
+                          <img src={BNB} width={20} /> BSC TEST NET
+                        </span>
+                      ) : chainid == 56 ? (
+                        <span>
+                          <img src={BNB} width={20} /> BSC MAIN NET
+                        </span>
+                      ) : chainid == 1 ? (
+                        <span>
+                          <img src={ETH} width={20} /> ETHEREUM MAIN NET
+                        </span>
+                      ) : chainid == 4 ? (
+                        <span>
+                          <img src={ETH} width={20} /> RINKEBY TEST NET
+                        </span>
+                      ) : (
+                        'SWITCH NETWORK'
+                      )}
+                    </li>
+                    {acount ? (
+                      <li
+                        className="dropdown-i"
+                        onClick={() => disconnectwallet()}
+                      >
+                        Disconnect
+                      </li>
+                    ) : (
+                      ''
+                    )}
+                  </ul>
+                </div> :  <button
+                    class="connectbtn"
+                    type="button"
+                    id="dropdownMenuButton2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    onClick={() => toggleModal()}
+                  >
+                    CONNECT
+                  </button>}
+              </div>
             </div>
-          </div>
+          }
         </nav>
       </section>
       {modal && (

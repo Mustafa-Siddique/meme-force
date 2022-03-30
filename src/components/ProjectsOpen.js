@@ -26,6 +26,7 @@ import ETH from './../Images/eth.png'
 import BNB from './../Images/bnb.png'
 import { isMobile } from 'react-device-detect'
 
+
 export default function ProjectsOpen() {
   /* COUNTDOWN */
 
@@ -181,8 +182,8 @@ export default function ProjectsOpen() {
 
   const slicing = (address) => {
     if(address){
-    const first = address.slice(0, 5)
-    const second = address.slice(36)
+    const first = address.slice(0, 6)
+    const second = address.slice(37)
     return first + '....' + second
     }
 
@@ -423,7 +424,7 @@ export default function ProjectsOpen() {
           {!isMobile ? (
             <div className="container-fluid">
               <a className="navbar-brand" href="/">
-                <img src={logo} alt="" />
+                <img src={logo} alt=""  />
               </a>
               <button
                 className="navbar-toggler"
@@ -473,6 +474,7 @@ export default function ProjectsOpen() {
                     marginRight: "10px",
                     marginLeft: "10px",
                     marginTop: "-10px",
+                    fontSize:'14px'
                   }}
                   >
                    {slicing(window.account)}
@@ -491,14 +493,15 @@ export default function ProjectsOpen() {
                     aria-current="page"
                     onClick={() => toggleModal()}
                     style={{
-                      color: 'white',
-                      textDecoration: 'none',
-                      padding: '7px',
-                      background: '#201F21',
-                      border: 'none',
-                      marginRight: '10px',
-                      marginLeft: '10px',
-                      marginTop: '-20px',
+                    color: "white",
+                    textDecoration: "none",
+                    padding: "7px",
+                    background: "#201F21",
+                    border: "none",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                    marginTop: "-15px",
+                    fontSize:'14px'
                     }}
                   >
                     Connect
@@ -513,6 +516,7 @@ export default function ProjectsOpen() {
                     border: 'none',
                     padding: '7px',
                     background: '#201F21',
+                    fontSize:'14px'
                   }}
                 >
                   Create Presale
@@ -527,6 +531,7 @@ export default function ProjectsOpen() {
                   padding: '7px',
                   background: '#201F21',
                   marginLeft: '10px',
+                  fontSize:'14px'
                 }}
               >
                 {chainid == 97 ? (
@@ -546,7 +551,7 @@ export default function ProjectsOpen() {
                     <img src={ETH} width={20} /> RINKEBY TEST NET
                   </span>
                 ) : (
-                  'SWITCH NETWORK'
+                  'Switch Network'
                 )}
               </button>
               <div className="mob-rate">
@@ -558,34 +563,24 @@ export default function ProjectsOpen() {
           ) : (
             <div className="container-fluid">
               <a className="navbar-brand" href="/">
-                <img src={logo} alt="" />
+                <img src={logo} alt="" style={{width:'70px'}} />
               </a>
               <div className="dropdown-slid">
-                <div class="dropdown">
+                {acount ? <div class="dropdown">
                   <button
-                    class="btn btn-secondary dropdown-toggle"
+                    class="connectbtn dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton2"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    MENU BUTTON
+                    {slicing(acount)}
                   </button>
                   <ul
                     class="dropdown-menu dropdown-menu-dark"
                     aria-labelledby="dropdownMenuButton2"
                   >
-                    <li className="dropdown-i" onClick={() => toggleModal()}>
-                      {!acount ? 'Connect' : slicing(acount)}
-                    </li>
-                    <li className="dropdown-i">
-                      <NavLink
-                        to="/launchpad/admin-panel"
-                        style={{ color: '#000000' }}
-                      >
-                        Create Presale
-                      </NavLink>
-                    </li>
+                    
                     <li className="dropdown-i" onClick={() => NetWorkPopup()}>
                       {chainid == 97 ? (
                         <span>
@@ -618,15 +613,31 @@ export default function ProjectsOpen() {
                       ''
                     )}
                   </ul>
-                </div>
+                </div> :  <button
+                    class="connectbtn"
+                    type="button"
+                    id="dropdownMenuButton2"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    onClick={() => toggleModal()}
+                  >
+                    CONNECT
+                  </button>}
               </div>
+              <NavLink
+                to="/launchpad/admin-panel"
+                style={{ color: '#ffffff', textDecoration:"none",fontSize:"12px", background:'#201F21' }}
+                >
+                Create Presale
+              </NavLink>
+
             </div>
           )}
         </nav>
       </div>
       <div id="openProject-cont">
         <div className="container text-center my-5">
-          <h1>PROJECTS OPEN NOW</h1>
+          {isMobile ? <h3>PROJECTS OPEN NOW</h3> : <h1>PROJECTS OPEN NOW</h1>}
           <div className="countDown h3">
             {expired
               ? "It's the time"
@@ -635,7 +646,7 @@ export default function ProjectsOpen() {
         </div>
         {!presaleInformation ? (
           <div className="row justify-content-center">
-            <ReactLoading width={200} type="spokes" color="#fff" />
+            <ReactLoading width={200} type="bubbles" color="#fff" />
           </div>
         ) : (
           <div className="row">
@@ -672,6 +683,7 @@ export default function ProjectsOpen() {
           </div>
         </div>
       )}
+      {/* <Footer/> */}
     </>
   )
 }

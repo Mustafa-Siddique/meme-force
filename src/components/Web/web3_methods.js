@@ -1,5 +1,12 @@
 import { getWeb3 } from './web3'
+import Web3 from 'web3';
 import { EnvAdd } from './Addresses'
+const etherumprovider = new Web3.providers.HttpProvider(
+  process.env.REACT_APP_RPCURL,
+  {
+    timeout: 10000,
+  }
+);
 
 export const loginProcess = async () => {
   try {

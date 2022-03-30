@@ -10,8 +10,8 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
   },[])
 
   const slicing = (address) => {
-    const first = address.slice(0,10);
-    const second = address.slice(32);
+    const first = address.slice(0,3);
+    const second = address.slice(39);
     return first + "...." + second
   }
   return (
@@ -28,7 +28,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
           <tbody>
             <tr>
               <td>Presale Address</td>
-            <a href={`https://bscscan.com/address/${presaleaddress}`} style={{color:'#ffffff'}}><td>{slicing(presaleaddress)}</td></a>
+              <td><a href={`https://bscscan.com/address/${presaleaddress}`} style={{color:'#ffffff'}}>{slicing(presaleaddress)}</a></td>
             </tr>
             <tr>
               <td>Maximum Buy</td>

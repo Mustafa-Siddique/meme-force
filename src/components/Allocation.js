@@ -17,7 +17,8 @@ export default function Allocation({
   PresaleContract,
   presaleBalance,
   Transfer,
-  payee
+  payee,
+  user
 }) {
   const [showConfig, setShowConfig] = useState(false);
   const [showAddtowhitelist, setshowAddtowhitelist] = useState(false);
@@ -40,6 +41,7 @@ export default function Allocation({
   const [percentagevest, setPrecentagevest] = useState(0)
   const [initialclaimvest, setInitialclaimvest] = useState(0)
   const [artical, setArtical] = useState('')
+  const [fb,setFB] = useState('')
   const configshow = () => {
     setShowConfig(!showConfig);
   };
@@ -74,7 +76,8 @@ export default function Allocation({
       twitter,
       raddit,
       github,
-      instagram
+      instagram,
+      fb
     );
   };
   const AddWhitelist = async () => {
@@ -181,6 +184,11 @@ export default function Allocation({
               placeholder="Reddit Link"
               value={raddit}
               onChange={(e) => setRaddit(e.target.value)}
+            />
+            <input
+              placeholder="FaceBook Link"
+              value={fb}
+              onChange={(e) => setFB(e.target.value)}
             />
             <button className="submit-btn" onClick={() => configuringPresala()}>
               Submit
@@ -306,14 +314,14 @@ export default function Allocation({
           </button>
         </div>
       </div>
-      <div className="configure-presale">
+      {payee == user ?<div className="configure-presale">
         <div className="dowpdown-header">
           <h5>Transfer Funds to Payee</h5>
           <button className="submit-btn" onClick={() => Fundtopayee()}>
             Submit
           </button>
         </div>
-      </div>
+      </div> :''}
       <div className="configure-presale">
         <div className="dowpdown-header">
           <h5>Finalise Presale</h5>

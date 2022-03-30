@@ -445,6 +445,7 @@
   padding-bottom: 50px;
   padding-top: 100px;
   background-color: rgba(0, 0, 0, 0.733);
+ 
 }
 
 #footer-cont h2 {
@@ -827,7 +828,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
   margin-top: 10px;
   width: 100%;
-  border-bottom: 1px solid #000;
+  
 }
 
 .create-presale{
@@ -835,4 +836,22 @@ input::-webkit-inner-spin-button {
 }
 .slicebtn ul li{
  cursor: pointer;
+}
+.connectbtn{
+  font-size: 12px;
+  background-color: #201F21;
+  color: #ffffff;
+  border: none;
+  text-decoration: none;
+}
+
+.dropdown-slid ul li{
+  font-size: 12px;
+}
+.dropdown-slid ul{
+  width: fit-content;
+}
+
+.admindrop{
+  width: 150px;
 }

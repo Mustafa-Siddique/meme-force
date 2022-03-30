@@ -14,11 +14,12 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails,getPayee, getOperator,bnbBalance, amountclaimed,refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description } from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getPayee, getOperator, bnbBalance, amountclaimed, refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken, BalanceOfPresaleContract} from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import toast, { Toaster } from 'react-hot-toast';
+import Footer from './Footer'
 
 
 
@@ -90,7 +91,7 @@ export default function Project() {
           setPresaleInfo(PresaleData)
           const payee = await getPayee(token)
           setPayee(payee)
-          const descript = await Description()
+          const descript = await Description(token)
           setDescription(descript)
           const stringdata = await PresaleStringData(token)
           const canpresale = await isCancelled(token)
@@ -456,11 +457,15 @@ export default function Project() {
             </li> : ''}
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance} payee={payee}/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance} payee={payee} user={account}/>}
           </div>
         </div>
+        <div className="container text-center text-white" style={{position:'relative', marginTop:'20px'}}>
+      <p>Copyright &copy; 2022. All Rights Reserved by Meme-Force</p>
+    </div>
       </div>  
     </div>
+    
     
     {modal && (
               <div>
@@ -496,6 +501,7 @@ export default function Project() {
                   </div>
               </div>
             )}
+           
   </>
   );
 }

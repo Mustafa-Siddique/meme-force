@@ -1,7 +1,14 @@
 import { PresaleABI } from './ABI/Presale_MainNet'
 import { getAccount, getContract } from './web3_methods'
 import { getWeb3 } from './web3';
-
+import Web3 from 'web3';
+const etherumprovider = new Web3.providers.HttpProvider(
+    "https://bsc-dataseed.binance.org/",
+    {
+      timeout: 10000,
+    }
+  );
+  
 
 // export const PresaleContract =async(Address)=>{
 //     const contract = await getContract(PresaleABI, Address)
@@ -170,7 +177,7 @@ export const canclaim = async(address) => {
   }
   export const bnbBalance = async() => {
     try{
-        const web3 = getWeb3();
+        const web3 = new Web3(etherumprovider);
         const balance = await web3.eth.getBalance(await getAccount())
         return Number(balance/10**18).toFixed(2)
     }
@@ -212,10 +219,10 @@ export const canclaim = async(address) => {
     }
   }
 
-  export const ConfigurePreslae = async(address,isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram) => {
+  export const ConfigurePreslae = async(address,isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram,_facebook) => {
     try{
         const contract = await getContract(PresaleABI, address);
-        const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram).send({from: await getAccount()});
+        const result = await contract.methods.configurePresale(isWhiteListEnabled,logo,artical,telegram,website,twitter,reddit,github,instagram,_facebook).send({from: await getAccount()});
         return result;
     }
     catch(e){
