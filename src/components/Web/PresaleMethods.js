@@ -26,6 +26,28 @@ export const PresaleDetails = async(address)=>{
     }
 }
 
+export const endtime = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.endTime().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const startime = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.startTime().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 export const transfertoPayee = async(address,payee)=>{
     try{
     const contract = await getContract(PresaleABI, address);

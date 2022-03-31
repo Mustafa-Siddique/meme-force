@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import logoBg from "../Images/anim-icon.png";
 import { FaTelegramPlane, FaTwitter, FaGlobe, FaInstagram, FaReddit } from "react-icons/fa";
 import Navlaunch from "./Navlaunch";
@@ -14,12 +14,12 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getPayee, getOperator, bnbBalance, amountclaimed, refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description } from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getPayee, getOperator, bnbBalance, amountclaimed, refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description,endtime,startime } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken, BalanceOfPresaleContract} from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import toast, { Toaster } from 'react-hot-toast';
-import Footer from './Footer'
+import Countdown from './Countdown'
 
 
 
@@ -71,19 +71,43 @@ export default function Project() {
     const [ispresalecancelled, setIspresalecancelled] = useState(false)
     const [payee, setPayee] = useState('')
     const [discription, setDescription] = useState('')
+    const [startingTime, setStartingTime] = useState(0)
+    const [endtiming, setEndingtime] = useState(0)
+    const countdownDate = startingTime
+    const [
+      {
+        expired,
+        values: { days, hours, minutes, seconds },
+      },
+      setResult,
+    ] = useState(() => Countdown(new Date(startingTime).toUTCString()))
+  
+  
+    useEffect(() => {
+      if (expired) return undefined
+      const intervalId = setInterval(
+        () => setResult(Countdown(countdownDate)),
+        1000,
+      )
+      return () => {
+        clearInterval(intervalId)
+      }
+    }, [expired])
     
-    
-
-    useEffect(async()=>{
+    useEffect(async() => {
       try{
         const mm = window.localStorage.getItem("MM")
         if(mm){
-          ConsisConnectMetaMask();
+         await ConsisConnectMetaMask();
         }
       }
       catch(e){
-  
+        console.log(e)
       }
+    })
+    
+    
+    useEffect(async()=>{
         const init =async()=>{
           const isclaimable = await canclaim(token)
           setCanClaim(isclaimable)
@@ -91,6 +115,10 @@ export default function Project() {
           setPresaleInfo(PresaleData)
           const payee = await getPayee(token)
           setPayee(payee)
+          const end = await endtime(token)
+          setEndingtime(end)
+          const start = await startime(token)
+          setStartingTime(start)
           const descript = await Description(token)
           setDescription(descript)
           const stringdata = await PresaleStringData(token)
@@ -133,8 +161,6 @@ export default function Project() {
     setBNB(data/10**18)
    }
    
-   console.log("Balacne",BNB)
-
    const refundAmo =async()=>{
      await refundAmount();
    }
@@ -166,6 +192,7 @@ export default function Project() {
     const ConsisConnectMetaMask =async()=> {
       window.WC = false
       window.MM = true
+      
       await SelectWallet();
       await loginProcess();
       const acount = await getAccount();
@@ -318,7 +345,7 @@ export default function Project() {
                 presaleinfo._swapStatus === true
                   ? `sale-stat`
                   : `sale-stat bg-danger`
-              }>&bull; {presaleinfo._swapStatus === true ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
+              }>&bull; {ispresalecancelled ? "Cancelled" :  presaleinfo._totalRaised >= presaleinfo._hardCap ? "Successfull" : presaleinfo._swapStatus ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
                 {/* <div className="chain">BNB</div> */}
                 <p className="fs-6" style={{ color: "#6c757d" }}>
                   {discription}
@@ -374,7 +401,7 @@ export default function Project() {
                   >
                     <input disabled type="text" id="swapTo" placeholder={presaleinfo ? (amount * presaleinfo._swapRate) : '0'} />
                   </div>
-                  <button
+                  {expired ? <button
                     className="btn mt-4"
                     style={{
                       backgroundColor: "#660033",
@@ -386,7 +413,7 @@ export default function Project() {
                     onClick={()=>Swap()}
                   >
                     Buy
-                  </button>
+                  </button> : <p className="text-center mt-2">{days+"d" + " " + hours+"h" + " " + minutes+"m" + " " + seconds+"s"}</p>}
                   <button
                     className={`btn mt-1 text-light ${canClaim ? `` : `disabled `}`}
                     style={{

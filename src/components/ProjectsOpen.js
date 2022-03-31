@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useLayoutEffect } from 'react'
 import logoBg from '../Images/anim-icon.png'
 import { FaTelegramPlane, FaTwitter, FaGlobe } from 'react-icons/fa'
 import Countdown from './Countdown'
@@ -58,15 +58,27 @@ export default function ProjectsOpen() {
     }
   }, [expired])
 
+
+
+  useEffect(async() => {
+    const lgoinautowithmeta=async()=>{
+      try{
+        const mm = window.localStorage.getItem("MM")
+        if(mm){
+        await ConsisConnectMetaMask();
+        }
+      }
+      catch(e){
+        console.log(e)
+      }
+    }
+   lgoinautowithmeta();
+  },[])
+    
+
   useEffect(async () => {
     try {
-      const mm = window.localStorage.getItem('MM')
-      if (mm) {
-        ConsisConnectMetaMask()
-      }
-    } catch (e) {}
-    try {
-      if (window.account) {
+      if (true) {
         const chainID = await CheckChain()
         const id = await getChain()
         setChainID(parseInt(id))
@@ -161,6 +173,7 @@ export default function ProjectsOpen() {
     const acount = await getAccount()
     setAccount(acount)
     window.account = acount
+    
   }
 
   const ConnectWallet = async () => {

@@ -1,6 +1,6 @@
-export default function Countdown(nextDate) {
+export default function Countdown() {
     const now = new Date().getTime();
-    const distance = new Date(nextDate).getTime() - now;
+    const distance = new Date(1648677660 * 1000).getTime() - now;
     if (distance < 0) {
         return {
         expired: true,
