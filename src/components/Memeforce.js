@@ -18,8 +18,8 @@ export default function Memeforce() {
                             <h2>BSC LAUNCH</h2>
                         </div>
                         <div className="card-body border-top">
-                            <p>PRESALE<br />MAR 30th 10PM UTC<br />SC/HC 200/400 BNB</p>
-                            <p>LAUNCH<br />MAR 31st 10PM UTC</p>
+                            <p>PRESALE<br />MAR 30th 10PM UTC<br />SC/HC 225/450 BNB</p>
+                            <p>LAUNCH<br />APRIL 1st 10PM UTC</p>
                         </div>
                         <SiBinance id='card-logo'/>
                     </div>
@@ -28,7 +28,7 @@ export default function Memeforce() {
                             <h2>ETH LAUNCH</h2>
                         </div>
                         <div className="card-body border-top">
-                            <p>STEALH LAUNCH WITHIN 24 HRS</p>
+                            <p>FAIR LAUNCH ON APRIL 1st 10PM UTC</p>
                             <p>AFTER THE BSC LAUNCH</p>
                         </div>
                         <SiEthereum id='card-logo'/>
