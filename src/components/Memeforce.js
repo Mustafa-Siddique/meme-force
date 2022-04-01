@@ -18,7 +18,7 @@ export default function Memeforce() {
                             <h2>BSC LAUNCH</h2>
                         </div>
                         <div className="card-body border-top">
-                            <p>PRESALE<br />MAR 30th 10PM UTC<br />SC/HC 200/400 BNB</p>
+                            <p>PRESALE<br />MAR 30th 10PM UTC<br />SC/HC 225/450 BNB</p>
                             <p>LAUNCH<br />APRIL 1st 10PM UTC</p>
                         </div>
                         <SiBinance id='card-logo'/>
