@@ -73,14 +73,14 @@ export default function Project() {
     const [discription, setDescription] = useState('')
     const [startingTime, setStartingTime] = useState(0)
     const [endtiming, setEndingtime] = useState(0)
-    const countdownDate = startingTime
+    const countdownDate = 1648691401
     const [
       {
         expired,
         values: { days, hours, minutes, seconds },
       },
       setResult,
-    ] = useState(() => Countdown(new Date(startingTime).toUTCString()))
+    ] = useState(() => Countdown(new Date(countdownDate * 1000).toUTCString()))
   
   
     useEffect(() => {
@@ -106,7 +106,7 @@ export default function Project() {
       }
     })
     
-    
+    console.log("expired",expired,days, hours, minutes, seconds,new Date(countdownDate * 1000).toUTCString())
     useEffect(async()=>{
         const init =async()=>{
           const isclaimable = await canclaim(token)
@@ -343,8 +343,8 @@ export default function Project() {
                 </div>
                {presaleinfo ? <div className={
                 presaleinfo._swapStatus === true
-                  ? `sale-stat`
-                  : `sale-stat bg-danger`
+                  ? `sale-stat m-1`
+                  : `sale-stat bg-danger m-1`
               }>&bull; {ispresalecancelled ? "Cancelled" :  presaleinfo._totalRaised >= presaleinfo._hardCap ? "Successfull" : presaleinfo._swapStatus ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
                 {/* <div className="chain">BNB</div> */}
                 <p className="fs-6" style={{ color: "#6c757d" }}>
@@ -358,6 +358,7 @@ export default function Project() {
                       borderRadius: "5px",
                       color: "#fff",
                       width: "100%",
+                      marginBottom: '10px'
                     }}
                     onClick={()=>toggleModal()}
                   >
@@ -409,6 +410,7 @@ export default function Project() {
                       borderRadius: "5px",
                       color: "#fff",
                       width: "100%",
+                      
                     }}
                     onClick={()=>Swap()}
                   >

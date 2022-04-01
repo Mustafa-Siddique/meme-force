@@ -78,7 +78,7 @@ export default function ProjectsOpen() {
 
   useEffect(async () => {
     try {
-      if (true) {
+      if (acount) {
         const chainID = await CheckChain()
         const id = await getChain()
         setChainID(parseInt(id))
@@ -104,7 +104,7 @@ export default function ProjectsOpen() {
     } catch (e) {
       console.log(e)
     }
-  }, [window.account])
+  }, [acount])
 
   try {
     window.ethereum.on('chainChanged', async (accounts) => {
