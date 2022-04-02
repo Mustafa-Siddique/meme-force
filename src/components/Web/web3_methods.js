@@ -42,7 +42,6 @@ export const getAccount = async () => {
 
 export const getContract = async (abi, address) => {
   let web3 = getWeb3()
-  console.log(web3)
   const customeContract = new web3.eth.Contract(abi, address)
   return customeContract
 }

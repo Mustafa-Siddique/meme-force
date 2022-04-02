@@ -27,7 +27,7 @@ import BNB from './../Images/bnb.png'
 import { isMobile } from 'react-device-detect'
 
 
-export default function ProjectsOpen() {
+export default function ProjectsOpen({price}) {
   /* COUNTDOWN */
 
   const countdownDate = '2022-03-28 19:00 UTC'
@@ -569,7 +569,7 @@ export default function ProjectsOpen() {
               </button>
               <div className="mob-rate">
                 <a className="nav-link active mx-3" href="/">
-                  <img src={fav} style={{ height: '25px' }} alt="" /> $0.0005
+                  <img src={fav} style={{ height: '25px' }} alt="" /> ${price}
                 </a>
               </div>
             </div>

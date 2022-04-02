@@ -2,7 +2,7 @@ import React from "react";
 import {network_version} from './Web/web3_methods'
 import { useEffect, useState } from 'react';
 
-export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo,presaleaddress,decimal}) {
+export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo,presaleaddress,decimal,dayvest,percentVest}) {
 
   useEffect(async()=>{
       const netversion = await network_version();
@@ -48,7 +48,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
             </tr>
             <tr>
               <td>Total Funds Raised</td>
-              <td>{presaleinfo ? presaleinfo._totalRaised/10**18 : '0'} BNB</td>
+              <td>{presaleinfo ? (presaleinfo._totalRaised/10**18).toFixed(3) : '0'} BNB</td>
             </tr>
             {presaleinfo ?  <tr>
               <td>Access Type</td>
@@ -57,6 +57,14 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
               <td>Access Type</td>
               <td> </td>
             </tr>}
+            <tr>
+              <td>Day Per Vest</td>
+              <td>{dayvest}</td>
+            </tr>
+            <tr>
+              <td>Percentage Per Vest</td>
+              <td>{percentVest}</td>
+            </tr>
           </tbody>
         </table>
       </div>

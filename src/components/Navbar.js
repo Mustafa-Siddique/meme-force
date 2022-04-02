@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../Images/logo.png";
 import fav from '../Images/logo192.png'
 
-export default function Navbar() {
+export default function Navbar({price}) {
   return (
     <div style={{width:"100%", position:"absolute", zIndex:"11"}}>
       <nav className="navbar mx-auto navbar-expand-lg navbar-dark">
@@ -45,7 +45,7 @@ export default function Navbar() {
           </div>
             <div className="mob-rate d-lg-none">
                 <a className="nav-link active mx-3" href="/">
-                  <img src={fav} style={{height:"25px"}} alt="" /> $0.0005
+                  <img src={fav} style={{height:"25px"}} alt="" /> ${price}
                 </a>
             </div>
         </div>

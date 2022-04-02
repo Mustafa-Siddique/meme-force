@@ -4,10 +4,10 @@ import NavbarAdmin from "./NavbarAdmin";
 import "./AdminPanel.css";
 import Footer from "./Footer";
 
-export default function AdminPanel() {
+export default function AdminPanel({price}) {
   return (
     <>
-      <NavbarAdmin />
+      <NavbarAdmin price={price}/>
       <CreatePresale />
       <Footer />
     </>

@@ -11,10 +11,10 @@ import ComingSoon from '../components/ComingSoon';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-export default function Home() {
+export default function Home({price}) {
   return (
     <div>
-        <Navbar/>
+        <Navbar price={price}/>
         <Hero/>
         <Keyfeatures/>
         <Memeforce/>

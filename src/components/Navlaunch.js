@@ -2,12 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo.png";
 import fav from "../Images/logo192.png";
+import { isMobile } from 'react-device-detect'
 
-export default function Navlaunch() {
+export default function Navlaunch({price}) {
   return (
     <div style={{ width: "100%" }}>
       <nav className="navbar mx-auto navbar-expand-lg navbar-dark">
-        <div className="container-fluid">
+        {!isMobile ? <div className="container-fluid">
           <a className="navbar-brand" href="/">
             <img src={logo} alt="" />
           </a>
@@ -56,10 +57,24 @@ export default function Navlaunch() {
           </div>
           <div className="mob-rate">
             <a className="nav-link active mx-3" href="/">
-              <img src={fav} style={{ height: "25px" }} alt="" /> $0.0005
+              <img src={fav} style={{ height: "25px" }} alt="" /> ${price}
             </a>
           </div>
-        </div>
+        </div>: <div className="container-fluid">
+        <a className="navbar-brand" href="/">
+            <img src={logo} alt="" />
+          </a>
+
+             <div class="dropdown  project-nav ">
+              <button class="connectbtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown button
+              </button>
+              <div class="dropdown-menu dropdown-menu-dark project-nav-items" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-i" href="#"><NavLink to="/launchpad/admin-panel">Create Presale</NavLink></a><br/>
+                <a class="dropdown-i" href="#"><NavLink to="/launchpad">Launchpad</NavLink></a>
+              </div>
+            </div>
+          </div>}
       </nav>
     </div>
   );

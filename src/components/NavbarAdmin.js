@@ -13,7 +13,7 @@ import ETH from './../Images/eth.png'
 import BNB from './../Images/bnb.png'
 import { isMobile } from 'react-device-detect'
 
-export default function NavbarAdmin() {
+export default function NavbarAdmin({price}) {
   const [acount, setAccount] = useState();
   const [modal, setModal] = useState(false);
   const [ShowNetWrok, setShowNetWork] = useState(false)
@@ -262,6 +262,8 @@ export default function NavbarAdmin() {
               <a className="navbar-brand" href="/">
                 <img src={logo} alt="" style={{width:'70px'}} />
               </a>
+
+
               <div className="dropdown-slid">
                 {acount ? <div class="dropdown admindrop" style={{marginLeft:'20px'}}>
                   <button
@@ -321,6 +323,8 @@ export default function NavbarAdmin() {
                     CONNECT
                   </button>}
               </div>
+
+
             </div>
           }
         </nav>

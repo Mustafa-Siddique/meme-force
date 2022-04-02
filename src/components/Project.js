@@ -14,7 +14,7 @@ import Allocation from "./Allocation";
 import Client from "../Client";
 import { useParams } from "react-router-dom";
 import {TokenDecimals} from './Web/FactoryMethods'
-import { canclaim, claimnow, Owed, BuyTokens, CheckForWhiteAccount, PresaleDetails, getPayee, getOperator, bnbBalance, amountclaimed, refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description,endtime,startime } from "./Web/PresaleMethods";
+import { canclaim, claimnow, Owed, BuyTokens,PercentPerVest,DayPerVest, CheckForWhiteAccount, PresaleDetails, getPayee, getOperator, bnbBalance, amountclaimed, refundAmount,isCancelled, whitelistedpresale,PresaleStringData,Description,endtime,startime } from "./Web/PresaleMethods";
 import { TokenSupply, TokenName, TransferAmountFromToken, BalanceOfPresaleContract} from "./Web/FactoryMethods";
 import { ToastContainer, toast as Tost} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +24,7 @@ import Countdown from './Countdown'
 
 
 
-export default function Project() {
+export default function Project({price}) {
 
   const notify = () => Tost('Swap success!', {
     position: "top-left",
@@ -73,6 +73,8 @@ export default function Project() {
     const [discription, setDescription] = useState('')
     const [startingTime, setStartingTime] = useState(0)
     const [endtiming, setEndingtime] = useState(0)
+    const [dayvest, setDayvest] = useState(0)
+    const [percentVest, setPrecentVest] = useState(0)
     const countdownDate = 1648691401
     const [
       {
@@ -115,6 +117,10 @@ export default function Project() {
           setPresaleInfo(PresaleData)
           const payee = await getPayee(token)
           setPayee(payee)
+          const day = await DayPerVest(token)
+          setDayvest(day)
+          const percentper = await PercentPerVest(token)
+          setPrecentVest(percentper)
           const end = await endtime(token)
           setEndingtime(end)
           const start = await startime(token)
@@ -277,6 +283,7 @@ export default function Project() {
       }
     }
 
+    console.log( presaleinfo)
 
   return (
     <>
@@ -287,7 +294,7 @@ export default function Project() {
           <div className="bgMask"></div>
           <video src={vidProject} muted preload='auto' autoPlay={"autoplay"} loop></video>
       </div>
-      <Navlaunch />
+      <Navlaunch price={price}/>
       <div className="container-fluid position-relative">
         <div className="row cont mt-5">
           <div className="col-lg-5">
@@ -342,10 +349,10 @@ export default function Project() {
                   </div>
                 </div>
                {presaleinfo ? <div className={
-                presaleinfo._swapStatus === true
+                presaleinfo._swapStatus === true || (presaleinfo._totalRaised/10**18) >= (presaleinfo._hardCap/10**18)
                   ? `sale-stat m-1`
                   : `sale-stat bg-danger m-1`
-              }>&bull; {ispresalecancelled ? "Cancelled" :  presaleinfo._totalRaised >= presaleinfo._hardCap ? "Successfull" : presaleinfo._swapStatus ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
+              }>&bull; {ispresalecancelled ? "Cancelled" :  (presaleinfo._totalRaised/10**18) >= (presaleinfo._hardCap/10**18) ? "Successfull" : presaleinfo._swapStatus ? "Open" : "Close "}</div>: <div className={"sale-stat"}>&bull; "Open"</div>}
                 {/* <div className="chain">BNB</div> */}
                 <p className="fs-6" style={{ color: "#6c757d" }}>
                   {discription}
@@ -431,7 +438,7 @@ export default function Project() {
                 </div>
                 <div className="col">
                   <p>
-                    Remaining allocation: <span>{presaleinfo ? (presaleinfo._hardCap - presaleinfo._totalRaised)/10**18 : '00'} BNBs</span>
+                    Remaining allocation: <span>{presaleinfo ? ((presaleinfo._hardCap) - presaleinfo._totalRaised)/10**18 : '00'} BNBs</span>
                   </p>
                   <p className="m-0">
                     Reserved Token: <br />
@@ -486,7 +493,7 @@ export default function Project() {
             </li> : ''}
           </ul>
           <div className="container-fluid mt-2">
-            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} />: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance} payee={payee} user={account}/>}
+            {activeTab === 1 ? <ProjectDetails tokenName={token_name} decimal={deciaml} presaleaddress={token} totalSupply={tokenTotalSupply} symbol={symbol} presaleinfo={presaleinfo} dayvest={dayvest} percentVest={percentVest}/>: activeTab === 2 ? <Schedule/> : <Allocation PresaleContract={token} Transfer={TransferFunds} presaleBalance={presaleBalance} payee={payee} user={account}/>}
           </div>
         </div>
         <div className="container text-center text-white" style={{position:'relative', marginTop:'20px'}}>

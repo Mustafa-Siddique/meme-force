@@ -9,16 +9,30 @@ const etherumprovider = new Web3.providers.HttpProvider(
     }
   );
   
-
-// export const PresaleContract =async(Address)=>{
-//     const contract = await getContract(PresaleABI, Address)
-//     return contract;
-// }
-
 export const PresaleDetails = async(address)=>{
     try{
     const contract = await getContract(PresaleABI, address);
     const data = await contract.methods.getPresaleInfo().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+export const DayPerVest = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.daysPerVest().call();
+    return data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+export const PercentPerVest = async(address)=>{
+    try{
+    const contract = await getContract(PresaleABI, address);
+    const data = await contract.methods.percentPerVest().call();
     return data;
     }
     catch(e){
