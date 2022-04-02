@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../Images/logo.png";
 import fav from "../Images/logo192.png";
 import { isMobile } from 'react-device-detect'
 
 export default function Navlaunch({price}) {
+    const [isOpen,  setIsopen] = useState(false)
+    const toggleOpen = () => setIsopen(!isOpen);
+
+  const menuClass = `dropdown-menu${isOpen ? " show" : ""}`;
   return (
     <div style={{ width: "100%" }}>
       <nav className="navbar mx-auto navbar-expand-lg navbar-dark">
@@ -60,19 +64,23 @@ export default function Navlaunch({price}) {
               <img src={fav} style={{ height: "25px" }} alt="" /> ${price}
             </a>
           </div>
-        </div>: <div className="container-fluid">
+        </div>: <div className="project-nav-header">
         <a className="navbar-brand" href="/">
             <img src={logo} alt="" />
           </a>
-
-             <div class="dropdown  project-nav ">
-              <button class="connectbtn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
+             <div class="dropdown  project-nav" onClick={()=>toggleOpen()}>
+              <button 
+              class="connectbtn dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+                Manu 
               </button>
-              <div class="dropdown-menu dropdown-menu-dark project-nav-items" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-i" href="#"><NavLink to="/launchpad/admin-panel">Create Presale</NavLink></a><br/>
-                <a class="dropdown-i" href="#"><NavLink to="/launchpad">Launchpad</NavLink></a>
-              </div>
+              <ul class={`${menuClass} dropdown-menu-dark dropdown-menu-right`} aria-labelledby="dropdownMenuButton2">
+                  <li className="dropdown-i"><NavLink to="/launchpad" style={{color:'#ffffff'}}>Launchpad</NavLink></li>
+                  <li className="dropdown-i"><NavLink to="/launchpad/admin-panel" style={{color:'#ffffff'}}>Create Presale</NavLink></li>
+              </ul>
             </div>
           </div>}
       </nav>
