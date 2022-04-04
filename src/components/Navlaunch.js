@@ -75,7 +75,6 @@ export default function Navlaunch({price}) {
               id="dropdownMenuButton2"
               data-bs-toggle="dropdown"
               aria-expanded="false">
-                Manu 
                 Menu
               </button>
               <ul class={`${menuClass} dropdown-menu-dark dropdown-menu-right`} aria-labelledby="dropdownMenuButton2">
