@@ -76,6 +76,7 @@ export default function Navlaunch({price}) {
               data-bs-toggle="dropdown"
               aria-expanded="false">
                 Manu 
+                Menu
               </button>
               <ul class={`${menuClass} dropdown-menu-dark dropdown-menu-right`} aria-labelledby="dropdownMenuButton2">
                   <li className="dropdown-i"><NavLink to="/launchpad" style={{color:'#ffffff'}}>Launchpad</NavLink></li>

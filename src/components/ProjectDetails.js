@@ -59,7 +59,7 @@ export default function ProjectDetails({tokenName,totalSupply,symbol,presaleinfo
             </tr>}
             <tr>
               <td>Day Per Vest</td>
-              <td>{dayvest}</td>
+              <td>{dayvest/86400}</td>
             </tr>
             <tr>
               <td>Percentage Per Vest</td>

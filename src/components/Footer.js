@@ -15,6 +15,7 @@ export default function Footer() {
             <a href="https://t.me/MemeForceOfficial" className="btn">CHECK ETHERSCAN <img src={ethscan} alt="" /></a>
         </div>
         <div className="container text-center">
+          <p>Official Email: <a href="mailto:info@memeforce.app" style={{color:"#d80d6f"}}>info@memeforce.app</a></p>
           <p>Copyright &copy; 2022. All Rights Reserved by Meme-Force</p>
         </div>
     </div>
