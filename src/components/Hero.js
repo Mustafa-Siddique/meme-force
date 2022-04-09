@@ -39,8 +39,8 @@ export default function Hero() {
         <div className="hero-socials">
             <a href="https://github.com/Meme-Force/Whitepaper-v1/blob/main/MF_WP_V1.pdf" target='_blank'><span ref={heroTele}>Whitepaper</span> <RiFilePaper2Line/></a>
             <a href="https://t.me/MemeForceOfficial"><span ref={heroTele}>Telegram</span> <FaTelegramPlane/></a>
-            <a href="http://bscscan.com/"><span ref={heroBsc}>BSC Scan</span> <img src={bscscan} alt=""/></a>
-            <a href="https://etherscan.io/"><span ref={heroEth}>Ether Scan</span> <img src={ethscan} alt=""/></a>
+            <a href="https://bscscan.com/token/0xa97b64afbb6d6811696caafd323ffc9ea983a7bb" target="_blank"><span ref={heroBsc}>BSC Scan</span> <img src={bscscan} alt=""/></a>
+            <a href="https://etherscan.io/token/0x5c2fce5a43a56fc158a5a86cac4fcc4fbdc577f4" target="_blank"><span ref={heroEth}>Ether Scan</span> <img src={ethscan} alt=""/></a>
         </div></div>
     </div>
   )

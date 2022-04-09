@@ -29,17 +29,17 @@ export default function Navbar({price}) {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
+                <a className="nav-link active" aria-current="page" href="https://poocoin.app/tokens/0xa97b64afbb6d6811696caafd323ffc9ea983a7bb" target="_blank">
                   BSC CHART
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link active mx-3" href="/">
+                <a className="nav-link active mx-3" href="https://www.dextools.io/app/ether/pair-explorer/0x4197db1e795f5e16b6b107bc80ebc4038f3776c4" target="_blank">
                   ETH CHART
                 </a>
               </li>
               <li className="nav-item">
-                <button className="nav-link rounded btn px-3">BUY NOW</button>
+                <button className="nav-link rounded btn px-3"><a href="https://pancakeswap.finance/swap?outputCurrency=0xa97b64afbb6d6811696caafd323ffc9ea983a7bb" target="_blank"></a>BUY NOW</button>
               </li>
             </ul>
           </div>
